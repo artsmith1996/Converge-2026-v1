@@ -672,10 +672,8 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
           <button class="btn btn-primary" style="width:100%;margin-top:8px;justify-content:center" onclick="submitQuestion()"><i class="ti ti-send"></i> Submit question</button>
         </div>
         <div id="qna-list">
-          <div class="p-question-card pinned"><div class="pq-body">How does Accion's approach to multi-agent orchestration differ from standard LLM chaining?</div><div class="pq-meta"><span class="pq-author">Michael Kim · Keynote</span><div class="pq-vote voted" id="v1" onclick="toggleVote('v1','vc1')"><i class="ti ti-arrow-up"></i><span id="vc1">14</span></div></div></div>
-          <div class="p-question-card"><div class="pq-body">Will session recordings be available after the event?</div><div class="pq-meta"><span class="pq-author">Priya Anand · General</span><div class="pq-vote" id="v2" onclick="toggleVote('v2','vc2')"><i class="ti ti-arrow-up"></i><span id="vc2">8</span></div></div></div>
-          <div class="p-question-card"><div class="pq-body">What data sovereignty considerations apply to agentic AI across EMEA?</div><div class="pq-meta"><span class="pq-author">Nina Lawson · AI Governance</span><div class="pq-vote" id="v3" onclick="toggleVote('v3','vc3')"><i class="ti ti-arrow-up"></i><span id="vc3">6</span></div></div></div>
-        </div>
+          <div style="text-align:center;color:var(--text3);padding:32px 16px;font-size:13px"><i class="ti ti-message-dots" style="font-size:28px;display:block;margin-bottom:8px"></i>No questions yet. Questions submitted by participants will appear here.</div>
+          </div>
       </div>
     </div>
 
@@ -707,10 +705,8 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
       <div style="padding:14px">
         <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px">Notifications</div>
         <div id="notif-list">
-          <div class="notif-item unread"><div class="notif-dot"></div><div><div class="notif-body"><strong>Keynote starts in 15 min</strong> — Opening Keynote begins at 08:30 in Main Stage · Hall A.</div><div class="notif-time">Just now</div></div></div>
-          <div class="notif-item unread"><div class="notif-dot"></div><div><div class="notif-body"><strong>Agenda published</strong> — Full agenda for Converge 2026 is now live.</div><div class="notif-time">2 hours ago</div></div></div>
-          <div class="notif-item"><div style="width:8px;flex-shrink:0"></div><div><div class="notif-body"><strong>Registration confirmed</strong> — Your spot at Converge 2026 is confirmed.</div><div class="notif-time">Sep 17, 2026</div></div></div>
-        </div>
+          <div style="text-align:center;color:var(--text3);padding:32px 16px;font-size:13px"><i class="ti ti-bell" style="font-size:28px;display:block;margin-bottom:8px"></i>No notifications yet.</div>
+          </div>
       </div>
     </div>
 
@@ -880,11 +876,8 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
               <table class="data-table">
                 <thead><tr><th>Attendee</th><th>Role</th><th>Status</th></tr></thead>
                 <tbody>
-                  <tr><td><div class="att-cell"><div class="avatar av-p">SR</div><div><div class="att-name">Sarah Reynolds</div><div class="att-org">Google Cloud</div></div></div></td><td style="color:var(--text3)">CTO</td><td><span class="badge badge-vip">VIP</span></td></tr>
-                  <tr><td><div class="att-cell"><div class="avatar av-b">MK</div><div><div class="att-name">Michael Kim</div><div class="att-org">Microsoft Azure</div></div></div></td><td style="color:var(--text3)">Principal Eng.</td><td><span class="badge badge-conf">Confirmed</span></td></tr>
-                  <tr><td><div class="att-cell"><div class="avatar av-g">PA</div><div><div class="att-name">Priya Anand</div><div class="att-org">Accion Labs</div></div></div></td><td style="color:var(--text3)">VP Engineering</td><td><span class="badge badge-conf">Confirmed</span></td></tr>
-                  <tr><td><div class="att-cell"><div class="avatar av-a">TC</div><div><div class="att-name">Thomas Chen</div><div class="att-org">Salesforce</div></div></div></td><td style="color:var(--text3)">AI Architect</td><td><span class="badge badge-pend">Pending</span></td></tr>
-                </tbody>
+                  <tr><td colspan="3" style="text-align:center;color:var(--text3);padding:18px;font-size:12px">No recent registrations</td></tr>
+                  </tbody>
               </table>
             </div>
           </div>
@@ -931,11 +924,7 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
         <table class="full-table">
           <thead><tr><th>Attendee</th><th>Organization</th><th>Region</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="reg-table-body">
-            <tr><td><div class="att-cell"><div class="avatar av-p">SR</div><div><div class="att-name">Sarah Reynolds</div><div class="att-org">sarah@google.com</div></div></div></td><td>Google Cloud</td><td style="color:var(--text3)">AMER</td><td><span class="badge badge-vip">VIP</span></td><td><span class="icon-btn" onclick="showToast('Viewing profile…')"><i class="ti ti-eye"></i></span><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn" onclick="showToast('Email sent')"><i class="ti ti-mail"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td></tr>
-            <tr><td><div class="att-cell"><div class="avatar av-b">MK</div><div><div class="att-name">Michael Kim</div><div class="att-org">mkim@microsoft.com</div></div></div></td><td>Microsoft Azure</td><td style="color:var(--text3)">AMER</td><td><span class="badge badge-conf">Confirmed</span></td><td><span class="icon-btn" onclick="showToast('Viewing profile…')"><i class="ti ti-eye"></i></span><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn" onclick="showToast('Email sent')"><i class="ti ti-mail"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td></tr>
-            <tr><td><div class="att-cell"><div class="avatar av-g">PA</div><div><div class="att-name">Priya Anand</div><div class="att-org">pranand@accionlabs.com</div></div></div></td><td>Accion Labs</td><td style="color:var(--text3)">APAC</td><td><span class="badge badge-conf">Confirmed</span></td><td><span class="icon-btn" onclick="showToast('Viewing profile…')"><i class="ti ti-eye"></i></span><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn" onclick="showToast('Email sent')"><i class="ti ti-mail"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td></tr>
-            <tr><td><div class="att-cell"><div class="avatar av-a">TC</div><div><div class="att-name">Thomas Chen</div><div class="att-org">tchen@salesforce.com</div></div></div></td><td>Salesforce</td><td style="color:var(--text3)">AMER</td><td><span class="badge badge-pend">Pending</span></td><td><span class="icon-btn" onclick="showToast('Viewing profile…')"><i class="ti ti-eye"></i></span><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn" onclick="showToast('Email sent')"><i class="ti ti-mail"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td></tr>
-            <tr><td><div class="att-cell"><div class="avatar av-n">NL</div><div><div class="att-name">Nina Lawson</div><div class="att-org">nlawson@deloitte.com</div></div></div></td><td>Deloitte</td><td style="color:var(--text3)">EMEA</td><td><span class="badge badge-conf">Confirmed</span></td><td><span class="icon-btn" onclick="showToast('Viewing profile…')"><i class="ti ti-eye"></i></span><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn" onclick="showToast('Email sent')"><i class="ti ti-mail"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td></tr>
+          <tr><td colspan="5" style="text-align:center;color:var(--text3);padding:24px;font-size:13px"><i class="ti ti-users" style="font-size:20px;display:block;margin-bottom:6px"></i>No registrations yet. Add attendees using the button above.</td></tr>
           </tbody>
         </table>
       </div>
@@ -950,39 +939,8 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
         <table class="user-mgmt-table" id="user-mgmt-table">
           <thead><tr><th>User</th><th>Email</th><th>Organization</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="user-table-body">
-            <tr>
-              <td><div class="att-cell"><div class="avatar av-p">AB</div><div><div class="att-name">Abhijeet</div><div class="att-org">Global Marketing</div></div></div></td>
-              <td style="color:var(--text3)">abhijeet@accionlabs.com</td>
-              <td>Accion Labs</td>
-              <td><select class="role-select" onchange="changeRole(this)"><option selected>admin</option><option>participant</option></select></td>
-              <td><span class="badge badge-admin">Admin</span></td>
-              <td><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td>
-            </tr>
-            <tr>
-              <td><div class="att-cell"><div class="avatar av-b">SR</div><div><div class="att-name">Sarah Reynolds</div><div class="att-org">Google Cloud</div></div></div></td>
-              <td style="color:var(--text3)">sarah@google.com</td>
-              <td>Google Cloud</td>
-              <td><select class="role-select" onchange="changeRole(this)"><option>admin</option><option selected>participant</option></select></td>
-              <td><span class="badge badge-vip">VIP</span></td>
-              <td><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td>
-            </tr>
-            <tr>
-              <td><div class="att-cell"><div class="avatar av-g">PA</div><div><div class="att-name">Priya Anand</div><div class="att-org">Accion Labs</div></div></div></td>
-              <td style="color:var(--text3)">pranand@accionlabs.com</td>
-              <td>Accion Labs</td>
-              <td><select class="role-select" onchange="changeRole(this)"><option>admin</option><option selected>participant</option></select></td>
-              <td><span class="badge badge-conf">Confirmed</span></td>
-              <td><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td>
-            </tr>
-            <tr>
-              <td><div class="att-cell"><div class="avatar av-a">MK</div><div><div class="att-name">Michael Kim</div><div class="att-org">Microsoft Azure</div></div></div></td>
-              <td style="color:var(--text3)">mkim@microsoft.com</td>
-              <td>Microsoft Azure</td>
-              <td><select class="role-select" onchange="changeRole(this)"><option>admin</option><option selected>participant</option></select></td>
-              <td><span class="badge badge-conf">Confirmed</span></td>
-              <td><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td>
-            </tr>
-          </tbody>
+            <tr><td colspan="6" style="text-align:center;color:var(--text3);padding:24px;font-size:13px"><i class="ti ti-user-cog" style="font-size:20px;display:block;margin-bottom:6px"></i>No users yet. Use "Add user" to invite your event team and attendees.</td></tr>
+            </tbody>
         </table>
       </div>
 
@@ -1049,8 +1007,6 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
           </div>
           <div>
             <div class="section-hdr">Sent</div>
-            <div class="notif-log-item"><div class="notif-log-top"><div class="notif-title-txt">Agenda published</div><div class="notif-time">Sep 18</div></div><div class="notif-stats"><span class="notif-reach">142 delivered</span><span>Open: 78%</span></div></div>
-            <div class="notif-log-item"><div class="notif-log-top"><div class="notif-title-txt">Registration is open</div><div class="notif-time">Sep 10</div></div><div class="notif-stats"><span class="notif-reach">230 delivered</span><span>Open: 84%</span></div></div>
             <div id="notif-sent-log"></div>
           </div>
         </div>
@@ -1246,7 +1202,7 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
     </select>
     <div style="display:flex;gap:8px">
       <button class="btn" style="flex:1;justify-content:center" onclick="closeModal('add-user-modal')">Cancel</button>
-      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="addUser()"><i class="ti ti-user-plus"></i> Add user</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="addUser()"><i class="ti ti-user-plus"></i> Add &amp; invite user</button>
     </div>
   </div>
 </div>
@@ -1686,52 +1642,156 @@ function uploadGalleryPhoto() {
    USER MANAGEMENT
 ══════════════════════════════ */
 async function addUser() {
-  const name  = document.getElementById('new-user-name').value.trim();
-  const email = document.getElementById('new-user-email').value.trim();
-  const org   = document.getElementById('new-user-org').value.trim();
-  const role  = document.getElementById('new-user-app-role').value;
-  const region= document.getElementById('new-user-region').value;
-  if(!name || !email){ showToast('Name and email are required'); return; }
+  const name   = document.getElementById('new-user-name').value.trim();
+  const email  = document.getElementById('new-user-email').value.trim();
+  const org    = document.getElementById('new-user-org').value.trim();
+  const roleTitle = document.getElementById('new-user-role').value.trim();
+  const appRole= document.getElementById('new-user-app-role').value;
+  const region = document.getElementById('new-user-region').value;
 
-  if(!demoMode && supabaseClient) {
-    try {
-      const { error } = await supabaseClient.from('registrations').insert([{ email, full_name:name, organization:org, region, status: role==='vip'?'confirmed':'pending' }]);
-      if(error) throw error;
-    } catch(e) { /* fall through to UI update */ }
+  if(!name){ showToast('Full name is required'); return; }
+  if(!email || !email.includes('@')){ showToast('Valid email is required'); return; }
+
+  const btn = document.querySelector('#add-user-modal .btn-primary');
+  btn.innerHTML = '<span class="loading-spinner"></span> Inviting…';
+  btn.disabled = true;
+
+  try {
+    if(!demoMode && supabaseClient) {
+      // Step 1: Send Supabase invite email — creates auth account + sends magic link
+      const { data: inviteData, error: inviteError } = await supabaseClient.auth.admin
+        ? await supabaseClient.auth.admin.inviteUserByEmail(email, {
+            data: { full_name: name, organization: org, attendee_type: appRole }
+          })
+        : { data: null, error: { message: 'Admin invite requires service role key' } };
+
+      if(inviteError) {
+        // Fallback: insert registration directly (admin invite needs service key)
+        const { error: regError } = await supabaseClient.from('registrations').insert([{
+          email, full_name: name, organization: org, region,
+          status: appRole === 'vip' ? 'confirmed' : appRole === 'admin' ? 'confirmed' : 'pending'
+        }]);
+        if(regError) throw regError;
+      } else {
+        // Step 2: Set role in profiles table
+        if(inviteData?.user?.id) {
+          await supabaseClient.from('profiles').upsert({
+            id: inviteData.user.id,
+            full_name: name, organization: org,
+            role_title: roleTitle, region,
+            attendee_type: appRole
+          });
+        }
+      }
+    }
+
+    // Update UI immediately
+    addUserToTable(name, email, org, appRole, region);
+    closeModal('add-user-modal');
+
+    const roleLabel = {admin:'Admin',participant:'Participant',vip:'VIP Participant'}[appRole] || appRole;
+    showToast('✓ ' + name + ' added as ' + roleLabel + (demoMode ? ' (demo)' : ' — invite sent'));
+
+    // Clear form
+    ['new-user-name','new-user-email','new-user-org','new-user-role'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.value = '';
+    });
+    document.getElementById('new-user-app-role').value = 'participant';
+
+  } catch(err) {
+    showToast('Error: ' + (err.message || 'Could not add user'));
+  } finally {
+    btn.innerHTML = '<i class="ti ti-user-plus"></i> Add & invite user';
+    btn.disabled = false;
   }
+}
 
-  // Add row to user table
+function addUserToTable(name, email, org, appRole, region) {
   const colors = ['av-p','av-b','av-g','av-a','av-n','av-m'];
   const color = colors[Math.floor(Math.random()*colors.length)];
   const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
   const badgeMap = {participant:'badge-conf',admin:'badge-admin',vip:'badge-vip'};
-  const labelMap = {participant:'Confirmed',admin:'Admin',vip:'VIP'};
-  const row = document.createElement('tr');
-  row.innerHTML = `
-    <td><div class="att-cell"><div class="avatar ${color}">${initials}</div><div><div class="att-name">${name}</div><div class="att-org">${org}</div></div></div></td>
-    <td style="color:var(--text3)">${email}</td>
-    <td>${org}</td>
-    <td><select class="role-select" onchange="changeRole(this)"><option ${role==='participant'?'selected':''}>participant</option><option ${role==='admin'?'selected':''}>admin</option></select></td>
-    <td><span class="badge ${badgeMap[role]||'badge-conf'}">${labelMap[role]||'Confirmed'}</span></td>
-    <td><span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span></td>`;
-  document.getElementById('user-table-body').prepend(row);
-  closeModal('add-user-modal');
-  showToast('✓ ' + name + ' added');
-  // Clear form
-  ['new-user-name','new-user-email','new-user-org','new-user-role'].forEach(id => {
-    const el = document.getElementById(id);
-    if(el) el.value = '';
-  });
+  const labelMap = {participant:'Participant',admin:'Admin',vip:'VIP'};
+
+  // Remove empty state row if present
+  const emptyRow = document.querySelector('#user-table-body td[colspan="6"]');
+  if(emptyRow) emptyRow.closest('tr').remove();
+  const emptyRow2 = document.querySelector('#reg-table-body td[colspan="5"]');
+  if(emptyRow2) emptyRow2.closest('tr').remove();
+
+  // Add to user management table
+  const userRow = document.createElement('tr');
+  userRow.innerHTML = `
+    <td><div class="att-cell"><div class="avatar ${color}">${initials}</div>
+      <div><div class="att-name">${name}</div><div class="att-org">${org||''}</div></div></div></td>
+    <td style="color:var(--text3);font-size:11px">${email}</td>
+    <td>${org||'—'}</td>
+    <td>
+      <select class="role-select" onchange="changeRole(this)" data-email="${email}">
+        <option value="participant" ${appRole==='participant'?'selected':''}>participant</option>
+        <option value="admin" ${appRole==='admin'?'selected':''}>admin</option>
+        <option value="vip" ${appRole==='vip'?'selected':''}>vip</option>
+      </select>
+    </td>
+    <td><span class="badge ${badgeMap[appRole]||'badge-conf'}">${labelMap[appRole]||'Participant'}</span></td>
+    <td>
+      <span class="icon-btn" onclick="openEditModal(this,'${name}','${email}','${org}','${appRole}')"><i class="ti ti-edit"></i></span>
+      <span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span>
+    </td>`;
+  document.getElementById('user-table-body').prepend(userRow);
+
+  // Add to registration table too
+  const regRow = document.createElement('tr');
+  regRow.innerHTML = `
+    <td><div class="att-cell"><div class="avatar ${color}">${initials}</div>
+      <div><div class="att-name">${name}</div><div class="att-org">${email}</div></div></div></td>
+    <td>${org||'—'}</td>
+    <td style="color:var(--text3)">${region||'—'}</td>
+    <td><span class="badge ${badgeMap[appRole]||'badge-conf'}">${labelMap[appRole]||'Participant'}</span></td>
+    <td>
+      <span class="icon-btn"><i class="ti ti-eye"></i></span>
+      <span class="icon-btn" onclick="openEditModal(this,'${name}','${email}','${org}','${appRole}')"><i class="ti ti-edit"></i></span>
+      <span class="icon-btn" onclick="showToast('Invite email resent to ${email}')"><i class="ti ti-mail"></i></span>
+      <span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span>
+    </td>`;
+  document.getElementById('reg-table-body').prepend(regRow);
 }
 
-function changeRole(select) {
+function openEditModal(btn, name, email, org, role) {
+  document.querySelector('#edit-user-modal input[type="text"]').value = name || '';
+  document.querySelector('#edit-user-modal input[type="email"]').value = email || '';
+  document.querySelectorAll('#edit-user-modal input[type="text"]')[1].value = org || '';
+  const roleSelect = document.querySelector('#edit-user-modal select');
+  if(roleSelect) roleSelect.value = role || 'participant';
+  openModal('edit-user-modal');
+}
+
+async function changeRole(select) {
   const row = select.closest('tr');
   const badge = row.querySelector('.badge');
-  const roleMap = { admin:{cls:'badge-admin',label:'Admin'}, participant:{cls:'badge-conf',label:'Confirmed'}, vip:{cls:'badge-vip',label:'VIP'} };
+  const roleMap = {
+    admin:       {cls:'badge-admin',label:'Admin'},
+    participant: {cls:'badge-conf', label:'Participant'},
+    vip:         {cls:'badge-vip',  label:'VIP'}
+  };
   const r = roleMap[select.value] || roleMap.participant;
   badge.className = 'badge ' + r.cls;
   badge.textContent = r.label;
-  showToast('Role updated to ' + select.value);
+
+  // Save role change to Supabase if connected
+  const email = select.dataset.email;
+  if(!demoMode && supabaseClient && email) {
+    try {
+      await supabaseClient.from('registrations')
+        .update({ status: select.value === 'vip' ? 'confirmed' : select.value === 'admin' ? 'confirmed' : 'pending' })
+        .eq('email', email);
+      await supabaseClient.from('profiles')
+        .update({ attendee_type: select.value })
+        .eq('id', (await supabaseClient.from('registrations').select('id').eq('email',email).single())?.data?.id);
+    } catch(e) {}
+  }
+  showToast('✓ Role updated to ' + select.value + (demoMode ? '' : ' — saved'));
 }
 
 function confirmRemove(btn) {
