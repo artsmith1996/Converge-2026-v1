@@ -1618,46 +1618,100 @@ async function resendInvite(email) {
 
 /* ══════════════════════════════════════════════════════
    LOAD REGISTRATIONS (ADMIN)
+   Sources: registrations table + profiles table.
+   Always ensures the currently logged-in admin appears,
+   even if they were created directly in Supabase Auth
+   and have no registrations row.
 ══════════════════════════════════════════════════════ */
 async function loadRecentRegistrations() {
   if (demoMode || !supabaseClient) return;
   try {
-    const { data, error } = await supabaseClient.from('registrations').select('*').order('registered_at',{ascending:false}).limit(20);
-    if (error) throw error;
-    if (!data || data.length === 0) return;
+    // Pull both tables in parallel
+    const [regResult, profResult] = await Promise.all([
+      supabaseClient.from('registrations').select('*').order('registered_at',{ascending:false}).limit(50),
+      supabaseClient.from('profiles').select('*').order('full_name',{ascending:true}).limit(50)
+    ]);
 
-    const colors = ['av-p','av-b','av-g','av-a','av-n','av-m'];
-    const badgeMap = { confirmed:'badge-conf', pending:'badge-pend', waitlisted:'badge-wait', vip:'badge-vip', admin:'badge-admin' };
+    const regData  = regResult.data  || [];
+    const profData = profResult.data || [];
 
-    // Clear empty state
-    document.getElementById('user-table-body').innerHTML = '';
-    document.getElementById('reg-table-body').innerHTML  = '';
-    document.getElementById('overview-reg-tbody').innerHTML = '';
+    // Build a merged list — registrations are authoritative;
+    // profiles fill in anyone who exists in auth but not registrations
+    const seenEmails = new Set(regData.map(r => r.email?.toLowerCase()));
+
+    // Always include the logged-in admin if they're missing
+    if (currentUser?.email && !seenEmails.has(currentUser.email.toLowerCase())) {
+      const adminName = currentUser.user_metadata?.full_name || currentUser.email.split('@')[0];
+      regData.unshift({
+        id:            'auth-' + currentUser.id,
+        email:         currentUser.email,
+        full_name:     adminName,
+        organization:  currentUser.user_metadata?.organization || '—',
+        role_title:    currentUser.user_metadata?.role_title   || 'Administrator',
+        region:        '—',
+        attendee_type: 'admin',
+        status:        'confirmed',
+        registered_at: currentUser.created_at
+      });
+      seenEmails.add(currentUser.email.toLowerCase());
+    }
+
+    // Merge in profile-only users (exist in auth but no registration row)
+    profData.forEach(p => {
+      if (p.email && !seenEmails.has(p.email.toLowerCase())) {
+        regData.push({
+          id:            'prof-' + p.id,
+          email:         p.email,
+          full_name:     p.full_name || p.email.split('@')[0],
+          organization:  p.organization || '—',
+          role_title:    p.role_title   || '—',
+          region:        p.region       || '—',
+          attendee_type: p.attendee_type || 'participant',
+          status:        'confirmed',
+          registered_at: null
+        });
+        seenEmails.add(p.email.toLowerCase());
+      }
+    });
+
+    // Clear tables
+    document.getElementById('user-table-body').innerHTML     = '';
+    document.getElementById('reg-table-body').innerHTML      = '';
+    document.getElementById('overview-reg-tbody').innerHTML  = '';
     localUsers = [];
 
-    data.forEach((r, i) => {
-      const name     = r.full_name || r.email?.split('@')[0] || 'Unknown';
-      const color    = colors[i % colors.length];
-      const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
-      const appRole  = r.attendee_type || 'participant';
-      const status   = r.status || 'pending';
-      const uid      = 'db-' + r.id;
-      const badge    = badgeMap[status] || 'badge-pend';
+    if (regData.length === 0) return;
+
+    const colors   = ['av-p','av-b','av-g','av-a','av-n','av-m'];
+    const badgeMap = { confirmed:'badge-conf', pending:'badge-pend', waitlisted:'badge-wait', vip:'badge-vip', admin:'badge-admin' };
+
+    regData.forEach((r, i) => {
+      const name      = r.full_name || r.email?.split('@')[0] || 'Unknown';
+      const color     = colors[i % colors.length];
+      const initials  = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+      const appRole   = r.attendee_type || 'participant';
+      const status    = r.status || 'pending';
+      const uid       = 'db-' + r.id;
+      const badge     = badgeMap[appRole] === 'badge-admin' ? 'badge-admin' : badgeMap[status] || 'badge-pend';
       const roleLabel = { participant:'Participant', admin:'Admin', vip:'VIP' }[appRole] || 'Participant';
+      const isMe      = r.email?.toLowerCase() === currentUser?.email?.toLowerCase();
 
       localUsers.push({ uid, name, email: r.email, org: r.organization, appRole });
 
       document.getElementById('user-table-body').insertAdjacentHTML('beforeend', `
-        <tr data-uid="${uid}">
-          <td><div class="att-cell"><div class="avatar ${color}">${initials}</div><div><div class="att-name">${name}</div><div class="att-org">${r.organization||''}</div></div></div></td>
+        <tr data-uid="${uid}" ${isMe ? 'style="background:rgba(123,92,245,0.04)"' : ''}>
+          <td><div class="att-cell"><div class="avatar ${color}">${initials}</div><div>
+            <div class="att-name">${name}${isMe ? ' <span style="font-size:9px;color:var(--primary);font-weight:600;background:rgba(123,92,245,0.1);padding:1px 5px;border-radius:3px">You</span>' : ''}</div>
+            <div class="att-org">${r.organization||''}</div>
+          </div></div></td>
           <td style="color:var(--text3);font-size:11px">${r.email||''}</td>
           <td>${r.organization||'—'}</td>
           <td><select class="role-select" data-email="${r.email}" data-uid="${uid}" onchange="changeRole(this)">
             <option value="participant" ${appRole==='participant'?'selected':''}>participant</option>
-            <option value="admin" ${appRole==='admin'?'selected':''}>admin</option>
-            <option value="vip" ${appRole==='vip'?'selected':''}>vip</option>
+            <option value="admin"       ${appRole==='admin'?'selected':''}>admin</option>
+            <option value="vip"         ${appRole==='vip'?'selected':''}>vip</option>
           </select></td>
-          <td><span class="badge ${badge}">${roleLabel}</span></td>
+          <td><span class="badge ${appRole==='admin'?'badge-admin':badge}">${roleLabel}</span></td>
           <td>
             <span class="icon-btn" onclick="openEditUserModal('${uid}')"><i class="ti ti-edit"></i></span>
             <span class="icon-btn" onclick="resendInvite('${r.email}')"><i class="ti ti-mail"></i></span>
@@ -1667,10 +1721,13 @@ async function loadRecentRegistrations() {
 
       document.getElementById('reg-table-body').insertAdjacentHTML('beforeend', `
         <tr data-uid="${uid}">
-          <td><div class="att-cell"><div class="avatar ${color}">${initials}</div><div><div class="att-name">${name}</div><div class="att-org">${r.email||''}</div></div></div></td>
+          <td><div class="att-cell"><div class="avatar ${color}">${initials}</div><div>
+            <div class="att-name">${name}${isMe?' <span style="font-size:9px;color:var(--primary);font-weight:600;background:rgba(123,92,245,0.1);padding:1px 5px;border-radius:3px">You</span>':''}</div>
+            <div class="att-org">${r.email||''}</div>
+          </div></div></td>
           <td>${r.organization||'—'}</td>
           <td style="color:var(--text3)">${r.region||'—'}</td>
-          <td><span class="badge ${badge}">${status}</span></td>
+          <td><span class="badge ${appRole==='admin'?'badge-admin':badge}">${appRole==='admin'?'Admin':status}</span></td>
           <td>
             <span class="icon-btn" onclick="openEditUserModal('${uid}')"><i class="ti ti-edit"></i></span>
             <span class="icon-btn" onclick="resendInvite('${r.email}')"><i class="ti ti-mail"></i></span>
@@ -1681,12 +1738,22 @@ async function loadRecentRegistrations() {
       if (i < 5) {
         document.getElementById('overview-reg-tbody').insertAdjacentHTML('beforeend', `
           <tr>
-            <td><div class="att-cell"><div class="avatar ${color}">${initials}</div><div><div class="att-name">${name}</div><div class="att-org">${r.email||''}</div></div></div></td>
+            <td><div class="att-cell"><div class="avatar ${color}">${initials}</div><div>
+              <div class="att-name">${name}</div>
+              <div class="att-org">${r.email||''}</div>
+            </div></div></td>
             <td style="color:var(--text3)">${r.role_title||'—'}</td>
-            <td><span class="badge ${badge}">${status}</span></td>
+            <td><span class="badge ${appRole==='admin'?'badge-admin':badge}">${appRole==='admin'?'Admin':status}</span></td>
           </tr>`);
       }
     });
+
+    // Update KPI with merged count
+    const total = regData.length;
+    setEl('kpi-reg', total);
+    setEl('reg-stat-total', total);
+    setEl('reg-nav-badge', total);
+
   } catch(e) { console.error('loadRecentRegistrations:', e); }
 }
 
