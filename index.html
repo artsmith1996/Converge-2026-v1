@@ -93,7 +93,7 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ro
 .p-notif-btn{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px;cursor:pointer;position:relative}
 .p-notif-badge{position:absolute;top:5px;right:5px;width:8px;height:8px;border-radius:50%;background:var(--cta);border:1.5px solid var(--secondary);display:none}
 .p-avatar{width:34px;height:34px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff;cursor:pointer;overflow:hidden;flex-shrink:0}
-.p-content{flex:1;overflow-y:auto;padding-bottom:70px;-webkit-overflow-scrolling:touch}
+.p-content{flex:1;overflow-y:auto;padding-bottom:80px;-webkit-overflow-scrolling:touch}
 .p-panel{display:none}
 .p-panel.active{display:block}
 .p-tabs{display:flex;background:var(--surface);border-top:1px solid var(--border);position:absolute;bottom:0;left:0;right:0;z-index:100;padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -258,18 +258,23 @@ html,body{height:100%;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Ro
 .day-tab.active{background:var(--grad);color:#fff}
 .session-card{background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:12px 14px;display:flex;gap:12px;margin-bottom:8px;position:relative;overflow:hidden}
 .session-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--grad)}
-.session-card.keynote{background:var(--secondary);border-color:transparent}
+.session-card.keynote{background:var(--surface);border-color:var(--border)}
 .s-time{width:88px;flex-shrink:0;padding-top:1px}
 .s-time strong{font-size:12px;font-weight:600;color:var(--text2);display:block}
-.keynote .s-time strong{color:rgba(255,255,255,0.75)}
+
 .s-time span{font-size:10px;color:var(--text3)}
-.keynote .s-time span{color:rgba(255,255,255,0.35)}
+
 .s-info{flex:1;min-width:0}
 .s-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
-.keynote .s-title{color:#fff}
+
 .s-meta{display:flex;gap:10px;font-size:11px;color:var(--text3);flex-wrap:wrap;align-items:center}
-.keynote .s-meta{color:rgba(255,255,255,0.4)}
+
 .s-badge{background:rgba(123,92,245,0.08);color:var(--primary);border-radius:4px;padding:1px 6px;font-size:10px;font-weight:600}
+.chip-keynote{background:rgba(232,97,74,0.1);color:var(--cta);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700;letter-spacing:0.02em}
+.chip-talk{background:rgba(123,92,245,0.1);color:var(--primary);border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700}
+.chip-workshop{background:rgba(34,197,94,0.1);color:#15803D;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700}
+.chip-panel{background:rgba(245,158,11,0.1);color:#B45309;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700}
+.chip-closing{background:rgba(239,68,68,0.1);color:#B91C1C;border-radius:4px;padding:2px 8px;font-size:10px;font-weight:700}
 .add-session-btn{border:1.5px dashed var(--border2);background:transparent;border-radius:9px;padding:11px;text-align:center;cursor:pointer;color:var(--text3);font-size:12px;display:flex;align-items:center;justify-content:center;gap:7px;width:100%;transition:all 0.15s;font-family:inherit;margin-top:4px}
 .add-session-btn:hover{border-color:var(--primary);color:var(--primary)}
 .qa-layout{display:grid;grid-template-columns:1fr 280px;gap:14px}
@@ -528,16 +533,18 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
 
     <!-- NOTIFICATIONS -->
     <div id="p-panel-notifications" class="p-panel">
-      <div style="padding:14px">
-        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px">Notifications</div>
+      <div style="padding:0">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 14px 10px;border-bottom:1px solid var(--border);margin-bottom:14px"><div onclick="pGo('home')" style="width:32px;height:32px;border-radius:8px;background:var(--surface1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:16px;flex-shrink:0"><i class="ti ti-arrow-left"></i></div><div style="font-size:15px;font-weight:700;color:var(--text)">Notifications</div></div>
+        <div style="padding:0 14px 14px">
         <div id="notif-list"><div id="notif-empty" style="text-align:center;color:var(--text3);padding:32px 16px;font-size:13px"><i class="ti ti-bell" style="font-size:28px;display:block;margin-bottom:8px"></i>No notifications yet.</div></div>
       </div>
     </div>
 
     <!-- GALLERY -->
     <div id="p-panel-gallery" class="p-panel">
-      <div style="padding:14px">
-        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px">Event Gallery</div>
+      <div style="padding:0">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 14px 10px;border-bottom:1px solid var(--border);margin-bottom:14px"><div onclick="pGo('home')" style="width:32px;height:32px;border-radius:8px;background:var(--surface1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:16px;flex-shrink:0"><i class="ti ti-arrow-left"></i></div><div style="font-size:15px;font-weight:700;color:var(--text)">Event Gallery</div></div>
+        <div style="padding:0 14px 14px">
         <div class="gallery-grid" id="p-gallery-grid">
           <div class="gallery-item"><div class="gallery-placeholder"><i class="ti ti-photo"></i></div></div>
           <div class="gallery-item"><div class="gallery-placeholder"><i class="ti ti-photo"></i></div></div>
@@ -550,8 +557,9 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
 
     <!-- FEEDBACK -->
     <div id="p-panel-feedback" class="p-panel">
-      <div style="padding:14px">
-        <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:12px">Session Feedback</div>
+      <div style="padding:0">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 14px 10px;border-bottom:1px solid var(--border);margin-bottom:14px"><div onclick="pGo('home')" style="width:32px;height:32px;border-radius:8px;background:var(--surface1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:16px;flex-shrink:0"><i class="ti ti-arrow-left"></i></div><div style="font-size:15px;font-weight:700;color:var(--text)">Session Feedback</div></div>
+        <div style="padding:0 14px 14px">
         <div id="p-feedback-container">
           <div class="poll-card">
             <div class="poll-q" style="margin-bottom:4px">Rate: Opening Keynote</div>
@@ -573,7 +581,9 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
 
     <!-- PROFILE -->
     <div id="p-panel-profile" class="p-panel">
-      <div style="padding:14px">
+      <div style="padding:0">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 14px 10px;border-bottom:1px solid var(--border);margin-bottom:14px"><div onclick="pGo('home')" style="width:32px;height:32px;border-radius:8px;background:var(--surface1);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);font-size:16px;flex-shrink:0"><i class="ti ti-arrow-left"></i></div><div style="font-size:15px;font-weight:700;color:var(--text)">My Profile</div></div>
+        <div style="padding:0 14px 14px">
         <div class="profile-hero">
           <div class="profile-avatar-lg" id="prof-avatar-lg">U</div>
           <div class="profile-name" id="prof-name">Your Name</div>
@@ -600,6 +610,7 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
     <div class="p-tab" id="ptab-agenda" onclick="pGo('agenda')"><i class="ti ti-calendar-event"></i>Agenda</div>
     <div class="p-tab" id="ptab-qna" onclick="pGo('qna')"><i class="ti ti-message-dots"></i>Q&amp;A</div>
     <div class="p-tab" id="ptab-polls" onclick="pGo('polls')"><i class="ti ti-chart-bar"></i>Polls</div>
+    <div class="p-tab" id="ptab-more" onclick="pGo('home')"><i class="ti ti-dots"></i>More</div>
   </div>
 </div>
 
@@ -721,20 +732,20 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
           <button class="btn btn-sm btn-primary" onclick="openAddSessionModal(currentAgendaDay+1)"><i class="ti ti-plus"></i> Add session</button>
         </div>
         <div id="a-day0">
-          <div class="session-card keynote"><div class="s-time"><strong>08:30 AM</strong><span>90 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Keynote</span></div><div class="s-title">Opening Keynote: The AI-Ready Enterprise</div><div class="s-meta"><span><i class="ti ti-user"></i> CEO, Accion Labs</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff" onclick="openEditSessionModal('static-k1')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" style="border-color:rgba(255,100,100,0.4);background:rgba(255,100,100,0.1);color:#FCA5A5" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
-          <div class="session-card"><div class="s-time"><strong>10:30 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">AI Delivery Lifecycle — AI in SDLC</div><div class="s-meta"><span><i class="ti ti-user"></i> Michael Kim</span><span><i class="ti ti-map-pin"></i> Room B-201</span><span class="s-badge">Track 1</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s1')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
-          <div class="session-card"><div class="s-time"><strong>11:45 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">Enterprise Knowledge Spine: AI Memory at Scale</div><div class="s-meta"><span><i class="ti ti-user"></i> Priya Anand</span><span><i class="ti ti-map-pin"></i> Room C-110</span><span class="s-badge">Track 2</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s2')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
-          <div class="session-card"><div class="s-time"><strong>01:30 PM</strong><span>45 min</span></div><div class="s-info"><div class="s-title">Data Foundation for AI Readiness</div><div class="s-meta"><span><i class="ti ti-user"></i> Nina Lawson</span><span><i class="ti ti-map-pin"></i> Room B-201</span><span class="s-badge">Track 3</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s3')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
+          <div class="session-card keynote"><div class="s-time"><strong>08:30 AM</strong><span>90 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span class="chip-keynote">Keynote</span></div><div class="s-title">Opening Keynote: The AI-Ready Enterprise</div><div class="s-meta"><span><i class="ti ti-user"></i> CEO, Accion Labs</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-k1')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
+          <div class="session-card"><div class="s-time"><strong>10:30 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">AI Delivery Lifecycle — AI in SDLC</div><div class="s-meta"><span><i class="ti ti-user"></i> Michael Kim</span><span><i class="ti ti-map-pin"></i> Room B-201</span><span class="chip-talk">Talk</span> <span class="s-badge">Track 1</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s1')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
+          <div class="session-card"><div class="s-time"><strong>11:45 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">Enterprise Knowledge Spine: AI Memory at Scale</div><div class="s-meta"><span><i class="ti ti-user"></i> Priya Anand</span><span><i class="ti ti-map-pin"></i> Room C-110</span><span class="chip-talk">Talk</span> <span class="s-badge">Track 2</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s2')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
+          <div class="session-card"><div class="s-time"><strong>01:30 PM</strong><span>45 min</span></div><div class="s-info"><div class="s-title">Data Foundation for AI Readiness</div><div class="s-meta"><span><i class="ti ti-user"></i> Nina Lawson</span><span><i class="ti ti-map-pin"></i> Room B-201</span><span class="chip-talk">Talk</span> <span class="s-badge">Track 3</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s3')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
           <button class="add-session-btn" onclick="openAddSessionModal(1)"><i class="ti ti-plus"></i> Add session to Day 1</button>
         </div>
         <div id="a-day1" style="display:none">
-          <div class="session-card keynote"><div class="s-time"><strong>09:00 AM</strong><span>75 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Keynote</span></div><div class="s-title">Next-Gen AI Platforms &amp; Agentic AI Ecosystems</div><div class="s-meta"><span><i class="ti ti-user"></i> Thomas Chen, Salesforce</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff" onclick="openEditSessionModal('static-k2')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
-          <div class="session-card"><div class="s-time"><strong>11:00 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">Connected Enterprise &amp; Multi-agent Orchestration</div><div class="s-meta"><span><i class="ti ti-user"></i> Ravi Weston, IBM</span><span><i class="ti ti-map-pin"></i> Room A-105</span><span class="s-badge">Track 4</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s4')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
+          <div class="session-card keynote"><div class="s-time"><strong>09:00 AM</strong><span>75 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span class="chip-keynote">Keynote</span></div><div class="s-title">Next-Gen AI Platforms &amp; Agentic AI Ecosystems</div><div class="s-meta"><span><i class="ti ti-user"></i> Thomas Chen, Salesforce</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-k2')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
+          <div class="session-card"><div class="s-time"><strong>11:00 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">Connected Enterprise &amp; Multi-agent Orchestration</div><div class="s-meta"><span><i class="ti ti-user"></i> Ravi Weston, IBM</span><span><i class="ti ti-map-pin"></i> Room A-105</span><span class="chip-talk">Talk</span> <span class="s-badge">Track 4</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s4')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
           <button class="add-session-btn" onclick="openAddSessionModal(2)"><i class="ti ti-plus"></i> Add session to Day 2</button>
         </div>
         <div id="a-day2" style="display:none">
-          <div class="session-card keynote"><div class="s-time"><strong>09:30 AM</strong><span>60 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Closing Keynote</span></div><div class="s-title">AI Governance &amp; Security at Enterprise Scale</div><div class="s-meta"><span><i class="ti ti-user"></i> Nina Lawson, Deloitte</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff" onclick="openEditSessionModal('static-k3')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
-          <div class="session-card"><div class="s-time"><strong>11:00 AM</strong><span>45 min</span></div><div class="s-info"><div class="s-title">Panel: The Future of AI-First Organizations</div><div class="s-meta"><span><i class="ti ti-users"></i> Multiple speakers</span><span><i class="ti ti-map-pin"></i> Main Stage</span><span class="s-badge">Panel</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s5')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
+          <div class="session-card keynote"><div class="s-time"><strong>09:30 AM</strong><span>60 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span class="chip-closing">Closing Keynote</span></div><div class="s-title">AI Governance &amp; Security at Enterprise Scale</div><div class="s-meta"><span><i class="ti ti-user"></i> Nina Lawson, Deloitte</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-k3')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
+          <div class="session-card"><div class="s-time"><strong>11:00 AM</strong><span>45 min</span></div><div class="s-info"><div class="s-title">Panel: The Future of AI-First Organizations</div><div class="s-meta"><span><i class="ti ti-users"></i> Multiple speakers</span><span><i class="ti ti-map-pin"></i> Main Stage</span><span class="chip-panel">Panel</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s5')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
           <button class="add-session-btn" onclick="openAddSessionModal(3)"><i class="ti ti-plus"></i> Add session to Day 3</button>
         </div>
         <div id="a-dynamic-sessions"></div>
@@ -1784,12 +1795,19 @@ function renderAdminSessions() {
       const ds = allSessions.filter(s => s.day_number === dayIdx+1);
       if (ds.length === 0) return;
       container.innerHTML = ds.map(s => {
-        const isKeynote = s.session_type === 'keynote';
-        const timeStr   = s.start_time ? s.start_time.slice(0,5) : '';
-        return `<div class="session-card ${isKeynote?'keynote':''}" data-session-id="${s.id}">
+        const typeChipMap = {
+          keynote:  '<span class="chip-keynote">Keynote</span>',
+          talk:     '<span class="chip-talk">Talk</span>',
+          workshop: '<span class="chip-workshop">Workshop</span>',
+          panel:    '<span class="chip-panel">Panel</span>',
+          na:       '',
+        };
+        const chip    = typeChipMap[s.session_type] || `<span class="chip-talk">${s.session_type||'Session'}</span>`;
+        const timeStr = s.start_time ? s.start_time.slice(0,5) : '';
+        return `<div class="session-card" data-session-id="${s.id}">
           <div class="s-time"><strong>${timeStr}</strong><span>${s.duration_min||60} min</span></div>
           <div class="s-info">
-            ${isKeynote?'<div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Keynote</span></div>':''}
+            ${chip ? '<div style="margin-bottom:5px">'+chip+'</div>' : ''}
             <div class="s-title">${s.title}</div>
             <div class="s-meta">
               ${s.speaker_name?'<span><i class="ti ti-user"></i> '+s.speaker_name+(s.speaker_org?', '+s.speaker_org:'')+'</span>':''}
@@ -1798,7 +1816,7 @@ function renderAdminSessions() {
             </div>
           </div>
           <div style="display:flex;flex-direction:column;gap:5px">
-            <span class="icon-btn ${isKeynote?"style='border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff'":''}" onclick="openEditSessionModal('${s.id}')"><i class="ti ti-edit"></i></span>
+            <span class="icon-btn" onclick="openEditSessionModal('${s.id}')"><i class="ti ti-edit"></i></span>
             <span class="icon-btn danger" onclick="deleteSession('${s.id}',this)"><i class="ti ti-trash"></i></span>
           </div>
         </div>`;
@@ -2155,7 +2173,7 @@ async function createPoll() {
       if (pErr) throw pErr;
       pollId = poll[0].id;
       const { error: oErr } = await supabaseClient.from('poll_options').insert(
-        opts.map((text, i) => ({ poll_id: pollId, option_text: text, vote_count: 0, sort_order: i }))
+        opts.map((text, i) => ({ poll_id: pollId, option_text: text, vote_count: 0 }))
       );
       if (oErr) throw oErr;
     }
@@ -2241,10 +2259,10 @@ async function votePollLive(pollId, optionIndex, optionText, totalOptions) {
 
   if (!demoMode && supabaseClient) {
     try {
-      const { data: opts } = await supabaseClient.from('poll_options').select('*').eq('poll_id', pollId).order('sort_order');
+      const { data: opts } = await supabaseClient.from('poll_options').select('*').eq('poll_id', pollId);
       if (opts && opts[optionIndex]) {
         await supabaseClient.from('poll_options').update({ vote_count: (opts[optionIndex].vote_count||0)+1 }).eq('id', opts[optionIndex].id);
-        const updated = await supabaseClient.from('poll_options').select('vote_count').eq('poll_id', pollId).order('sort_order');
+        const updated = await supabaseClient.from('poll_options').select('vote_count').eq('poll_id', pollId);
         if (updated.data) {
           const total = updated.data.reduce((s,o)=>s+(o.vote_count||0),0);
           updated.data.forEach((o,i) => {
@@ -2560,10 +2578,18 @@ function timeAgo(date) {
 function pGo(panel) {
   document.querySelectorAll('.p-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.p-tab').forEach(t=>t.classList.remove('active'));
-  const el  = document.getElementById('p-panel-'+panel);
+  const el = document.getElementById('p-panel-'+panel);
   if (el) { el.classList.add('active'); document.getElementById('p-content').scrollTop=0; }
+  // Highlight the correct bottom tab — secondary panels highlight More tab
+  const primaryTabs = ['home','agenda','qna','polls'];
   const tab = document.getElementById('ptab-'+panel);
-  if (tab) tab.classList.add('active');
+  if (tab) {
+    tab.classList.add('active');
+  } else if (!primaryTabs.includes(panel)) {
+    // Secondary panel — highlight More tab so user knows where they are
+    const moreTab = document.getElementById('ptab-more');
+    if (moreTab) moreTab.classList.add('active');
+  }
   if (panel==='notifications') document.getElementById('p-notif-badge').style.display='none';
 }
 
