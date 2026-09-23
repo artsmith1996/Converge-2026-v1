@@ -1041,28 +1041,34 @@ function updateDbStatus(state) {
    correct screen without requiring another login.
 ══════════════════════════════════════════════════════ */
 window.addEventListener('load', () => {
-  setTimeout(async () => {
+  setTimeout(() => {
     const splash = document.getElementById('screen-splash');
-    splash.style.pointerEvents = 'none';  // block touches immediately
+    splash.style.pointerEvents = 'none';
     splash.classList.add('fade-out');
-    await new Promise(r => setTimeout(r, 650));
-    splash.style.display   = 'none';
-    splash.style.visibility = 'hidden';   // belt-and-suspenders
 
-    if (!demoMode && supabaseClient) {
-      try {
-        const { data: { session } } = await supabaseClient.auth.getSession();
-        if (session) {
-          currentUser = session.user;
-          const role = await resolveRole(currentUser);
-          currentRole = role;
-          postLoginRoute(role);
-          return;
-        }
-      } catch(e) {}
-    }
-    showScreen('login');
-  }, 2800);
+    setTimeout(() => {
+      // Dismiss splash unconditionally — login screen shows immediately
+      splash.style.display    = 'none';
+      splash.style.visibility = 'hidden';
+      showScreen('login');
+
+      // Auth check runs in background — if a valid session exists,
+      // it silently redirects without user needing to log in again
+      if (!demoMode && supabaseClient) {
+        Promise.race([
+          supabaseClient.auth.getSession(),
+          new Promise(r => setTimeout(() => r({ data: { session: null } }), 3000)) // 3s max
+        ]).then(async ({ data: { session } }) => {
+          if (session) {
+            currentUser = session.user;
+            const role  = await resolveRole(currentUser);
+            currentRole = role;
+            postLoginRoute(role);
+          }
+        }).catch(() => { /* stay on login */ });
+      }
+    }, 650);
+  }, 2400);
 });
 
 /* ══════════════════════════════════════════════════════
