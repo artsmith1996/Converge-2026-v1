@@ -721,7 +721,7 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
           <button class="btn btn-sm btn-primary" onclick="openAddSessionModal(currentAgendaDay+1)"><i class="ti ti-plus"></i> Add session</button>
         </div>
         <div id="a-day0">
-          <div class="session-card keynote"><div class="s-time"><strong>08:30 AM</strong><span>90 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Keynote</span></div><div class="s-title">Opening Keynote: The AI-Ready Enterprise</div><div class="s-meta"><span><i class="ti ti-user"></i> CEO, Accion Labs</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff" onclick="openEditSessionModal('static-k1')"><i class="ti ti-edit"></i></span></div></div>
+          <div class="session-card keynote"><div class="s-time"><strong>08:30 AM</strong><span>90 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Keynote</span></div><div class="s-title">Opening Keynote: The AI-Ready Enterprise</div><div class="s-meta"><span><i class="ti ti-user"></i> CEO, Accion Labs</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff" onclick="openEditSessionModal('static-k1')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" style="border-color:rgba(255,100,100,0.4);background:rgba(255,100,100,0.1);color:#FCA5A5" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
           <div class="session-card"><div class="s-time"><strong>10:30 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">AI Delivery Lifecycle — AI in SDLC</div><div class="s-meta"><span><i class="ti ti-user"></i> Michael Kim</span><span><i class="ti ti-map-pin"></i> Room B-201</span><span class="s-badge">Track 1</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s1')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
           <div class="session-card"><div class="s-time"><strong>11:45 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">Enterprise Knowledge Spine: AI Memory at Scale</div><div class="s-meta"><span><i class="ti ti-user"></i> Priya Anand</span><span><i class="ti ti-map-pin"></i> Room C-110</span><span class="s-badge">Track 2</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s2')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
           <div class="session-card"><div class="s-time"><strong>01:30 PM</strong><span>45 min</span></div><div class="s-info"><div class="s-title">Data Foundation for AI Readiness</div><div class="s-meta"><span><i class="ti ti-user"></i> Nina Lawson</span><span><i class="ti ti-map-pin"></i> Room B-201</span><span class="s-badge">Track 3</span></div></div><div style="display:flex;flex-direction:column;gap:5px"><span class="icon-btn" onclick="openEditSessionModal('static-s3')"><i class="ti ti-edit"></i></span><span class="icon-btn danger" onclick="deleteStaticCard(this)"><i class="ti ti-trash"></i></span></div></div>
@@ -937,7 +937,7 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
     <input type="hidden" id="session-day" value="1">
     <input type="hidden" id="session-edit-id" value="">
     <label class="form-label">Session title *</label><input type="text" class="form-input" id="sess-title" placeholder="e.g. AI Delivery Lifecycle">
-    <label class="form-label">Session type</label><select class="form-select" id="sess-type" style="margin-bottom:8px"><option value="talk">Talk</option><option value="keynote">Keynote</option><option value="workshop">Workshop</option><option value="panel">Panel</option></select>
+    <label class="form-label">Session type</label><select class="form-select" id="sess-type" style="margin-bottom:8px"><option value="talk">Talk</option><option value="keynote">Keynote</option><option value="workshop">Workshop</option><option value="panel">Panel</option><option value="na">N/A (Social / Networking)</option></select>
     <label class="form-label">Track</label><input type="text" class="form-input" id="sess-track" placeholder="e.g. Track 1">
     <label class="form-label">Speaker name</label><input type="text" class="form-input" id="sess-speaker" placeholder="Speaker full name">
     <label class="form-label">Speaker organization</label><input type="text" class="form-input" id="sess-speaker-org" placeholder="Organization">
@@ -1794,7 +1794,7 @@ function renderAdminSessions() {
             <div class="s-meta">
               ${s.speaker_name?'<span><i class="ti ti-user"></i> '+s.speaker_name+(s.speaker_org?', '+s.speaker_org:'')+'</span>':''}
               ${s.room?'<span><i class="ti ti-map-pin"></i> '+s.room+'</span>':''}
-              ${s.track?'<span class="s-badge">'+s.track+'</span>':''}
+              ${s.track&&s.track!=='na'?'<span class="s-badge">'+s.track+'</span>':''}
             </div>
           </div>
           <div style="display:flex;flex-direction:column;gap:5px">
@@ -1817,11 +1817,13 @@ function renderParticipantSessions() {
     container.innerHTML = ds.map(s => {
       const timeStr = s.start_time ? s.start_time.slice(0,5) : '';
       const type    = s.session_type || s.track || 'Session';
+      const showTag = type && type !== 'na';
       return `<div class="p-session-card">
         <div class="p-sess-time"><strong>${timeStr}</strong></div>
         <div><div class="p-sess-title">${s.title}</div>
         <div class="p-sess-meta">${s.speaker_name?s.speaker_name+' · ':''}${s.room||''}</div>
-        <span class="p-sess-tag">${type}</span></div>
+        ${showTag?`<span class="p-sess-tag">${type}</span>`:''}
+        </div>
       </div>`;
     }).join('');
   });
