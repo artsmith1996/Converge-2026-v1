@@ -1292,7 +1292,7 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
 const SUPABASE_URL  = 'https://dsyxdigclnvqdtncuxyn.supabase.co';
 const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRzeXhkaWdjbG52cWR0bmN1eHluIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAxMzg1NjIsImV4cCI6MjEwNTcxNDU2Mn0.ioxk5Yef2fpRqVMzoYvP1gSCeXFguy_-BP8pac1Yphg';
 
-let supabase = null;
+let supabaseClient = null;
 let currentUser = null;
 let currentRole = 'participant';
 let demoMode = true;
@@ -1300,7 +1300,7 @@ let demoMode = true;
 // Try to init Supabase — fall back to demo mode if keys not set
 try {
   if (SUPABASE_URL !== 'YOUR_SUPABASE_URL' && SUPABASE_KEY !== 'YOUR_SUPABASE_ANON_KEY') {
-    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     demoMode = false;
     updateDbStatus('connected');
   } else {
@@ -1334,8 +1334,8 @@ window.addEventListener('load', () => {
       splash.style.display = 'none';
       showScreen('login');
       // Check if already logged in
-      if (!demoMode && supabase) {
-        supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!demoMode && supabaseClient) {
+        supabaseClient.auth.getSession().then(({ data: { session } }) => {
           if (session) { currentUser = session.user; enterApp('participant'); }
         });
       }
@@ -1392,14 +1392,14 @@ async function handleLogin() {
     enterApp(selectedRole);
   } else {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
       if (error) throw error;
       currentUser = data.user;
       // Check role from profiles table
-      const { data: profile } = await supabase.from('profiles').select('attendee_type').eq('id', data.user.id).single();
+      const { data: profile } = await supabaseClient.from('profiles').select('attendee_type').eq('id', data.user.id).single();
       const dbRole = profile?.attendee_type || 'participant';
       if (selectedRole === 'admin' && dbRole !== 'admin') {
-        await supabase.auth.signOut();
+        await supabaseClient.auth.signOut();
         throw new Error('You do not have admin access to this event.');
       }
       btn.innerHTML = selectedRole === 'admin' ? 'Sign in as Admin' : 'Sign in';
@@ -1465,11 +1465,11 @@ async function loadParticipantData() {
   document.getElementById('pf-name').value = name;
   if (currentUser.email) document.getElementById('prof-org').textContent = currentUser.email;
 
-  if (!demoMode && supabase) {
+  if (!demoMode && supabaseClient) {
     try {
-      const { data: sessions } = await supabase.from('sessions').select('*').eq('day_number',1).order('start_time');
+      const { data: sessions } = await supabaseClient.from('sessions').select('*').eq('day_number',1).order('start_time');
       if (sessions && sessions.length > 0) renderHomeSessions(sessions);
-      const { data: questions } = await supabase.from('questions').select('*').eq('status','pending').order('vote_count', {ascending:false});
+      const { data: questions } = await supabaseClient.from('questions').select('*').eq('status','pending').order('vote_count', {ascending:false});
       if (questions && questions.length > 0) renderQuestions(questions);
     } catch(e) { /* stay on mock data */ }
   }
@@ -1508,11 +1508,11 @@ function renderQuestions(questions) {
 ══════════════════════════════ */
 async function loadAdminData() {
   tick();
-  if (!demoMode && supabase) {
+  if (!demoMode && supabaseClient) {
     try {
-      const { count: regCount } = await supabase.from('registrations').select('*', {count:'exact',head:true});
+      const { count: regCount } = await supabaseClient.from('registrations').select('*', {count:'exact',head:true});
       if(regCount !== null) document.getElementById('kpi-reg').textContent = regCount;
-      const { count: confCount } = await supabase.from('registrations').select('*', {count:'exact',head:true}).eq('status','confirmed');
+      const { count: confCount } = await supabaseClient.from('registrations').select('*', {count:'exact',head:true}).eq('status','confirmed');
       if(confCount !== null) document.getElementById('kpi-conf').textContent = confCount;
     } catch(e) {}
   }
@@ -1693,9 +1693,9 @@ async function addUser() {
   const region= document.getElementById('new-user-region').value;
   if(!name || !email){ showToast('Name and email are required'); return; }
 
-  if(!demoMode && supabase) {
+  if(!demoMode && supabaseClient) {
     try {
-      const { error } = await supabase.from('registrations').insert([{ email, full_name:name, organization:org, region, status: role==='vip'?'confirmed':'pending' }]);
+      const { error } = await supabaseClient.from('registrations').insert([{ email, full_name:name, organization:org, region, status: role==='vip'?'confirmed':'pending' }]);
       if(error) throw error;
     } catch(e) { /* fall through to UI update */ }
   }
@@ -1749,9 +1749,9 @@ async function submitQuestion() {
   const text = input.value.trim();
   if(!text){ showToast('Please enter a question'); return; }
 
-  if(!demoMode && supabase) {
+  if(!demoMode && supabaseClient) {
     try {
-      await supabase.from('questions').insert([{ body:text, author_name: currentUser?.email?.split('@')[0]||'You', status:'pending', vote_count:0 }]);
+      await supabaseClient.from('questions').insert([{ body:text, author_name: currentUser?.email?.split('@')[0]||'You', status:'pending', vote_count:0 }]);
     } catch(e) {}
   }
 
@@ -1773,11 +1773,11 @@ function toggleVote(btnId, countId) {
 
 async function toggleVoteDB(questionId, btnId, countId) {
   toggleVote(btnId, countId);
-  if(!demoMode && supabase) {
+  if(!demoMode && supabaseClient) {
     try {
       const el = document.getElementById(btnId);
       const voted = el.classList.contains('voted');
-      await supabase.from('questions').update({ vote_count: parseInt(document.getElementById(countId).textContent) }).eq('id', questionId);
+      await supabaseClient.from('questions').update({ vote_count: parseInt(document.getElementById(countId).textContent) }).eq('id', questionId);
     } catch(e) {}
   }
 }
@@ -1790,11 +1790,11 @@ async function votePoll(idx) {
   if(pollVoted){ showToast('You have already voted'); return; }
   pollVoted = true;
 
-  if(!demoMode && supabase) {
+  if(!demoMode && supabaseClient) {
     try {
-      const { data: opts } = await supabase.from('poll_options').select('id').order('id').limit(4);
+      const { data: opts } = await supabaseClient.from('poll_options').select('id').order('id').limit(4);
       if(opts && opts[idx]) {
-        await supabase.from('poll_options').update({ vote_count: supabase.rpc('increment', {row_id: opts[idx].id}) }).eq('id', opts[idx].id);
+        await supabaseClient.from('poll_options').update({ vote_count: supabase.rpc('increment', {row_id: opts[idx].id}) }).eq('id', opts[idx].id);
       }
     } catch(e) {}
   }
@@ -1824,9 +1824,9 @@ async function sendNotification() {
   const body  = document.getElementById('notif-body').value.trim();
   if(!title){ showToast('Please enter a notification title'); return; }
 
-  if(!demoMode && supabase) {
+  if(!demoMode && supabaseClient) {
     try {
-      await supabase.from('notifications').insert([{ title, body, segment:'all' }]);
+      await supabaseClient.from('notifications').insert([{ title, body, segment:'all' }]);
     } catch(e) {}
   }
 
@@ -1854,9 +1854,9 @@ async function sendNotification() {
 async function saveProfile() {
   const name = document.getElementById('pf-name').value.trim();
   const org  = document.getElementById('pf-org').value.trim();
-  if(!demoMode && supabase && currentUser) {
+  if(!demoMode && supabaseClient && currentUser) {
     try {
-      await supabase.from('profiles').upsert({ id: currentUser.id, full_name: name, organization: org });
+      await supabaseClient.from('profiles').upsert({ id: currentUser.id, full_name: name, organization: org });
     } catch(e) {}
   }
   if(name) {
@@ -1873,7 +1873,7 @@ async function saveProfile() {
    LOGOUT
 ══════════════════════════════ */
 async function logout() {
-  if(!demoMode && supabase) { try { await supabase.auth.signOut(); } catch(e) {} }
+  if(!demoMode && supabaseClient) { try { await supabaseClient.auth.signOut(); } catch(e) {} }
   currentUser = null;
   pollVoted = false;
   document.getElementById('role-select-view').style.display = 'block';
