@@ -1043,9 +1043,11 @@ function updateDbStatus(state) {
 window.addEventListener('load', () => {
   setTimeout(async () => {
     const splash = document.getElementById('screen-splash');
+    splash.style.pointerEvents = 'none';  // block touches immediately
     splash.classList.add('fade-out');
-    await new Promise(r => setTimeout(r, 600));
-    splash.style.display = 'none';
+    await new Promise(r => setTimeout(r, 650));
+    splash.style.display   = 'none';
+    splash.style.visibility = 'hidden';   // belt-and-suspenders
 
     if (!demoMode && supabaseClient) {
       try {
@@ -1186,16 +1188,21 @@ async function handleLogin() {
 
 function enterApp(role) {
   currentRole = role;
-  // Flash the splash before entering
+  // Brief branded splash after login
   const splash = document.getElementById('screen-splash');
-  splash.style.display = 'flex'; splash.style.opacity = '1';
+  splash.style.display     = 'flex';
+  splash.style.visibility  = 'visible';
+  splash.style.opacity     = '1';
+  splash.style.pointerEvents = 'auto';
   splash.classList.remove('fade-out');
   setTimeout(() => {
+    splash.style.pointerEvents = 'none';
     splash.classList.add('fade-out');
     setTimeout(() => {
-      splash.style.display = 'none';
+      splash.style.display    = 'none';
+      splash.style.visibility = 'hidden';
       postLoginRoute(role);
-    }, 600);
+    }, 650);
   }, 1400);
 }
 
@@ -1225,7 +1232,10 @@ function postLoginRoute(role) {
    SCREEN ROUTING
 ══════════════════════════════════════════════════════ */
 function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); s.style.display = ''; });
+  // Never touch the splash screen — it manages its own display state
+  document.querySelectorAll('.screen:not(#screen-splash)').forEach(s => {
+    s.classList.remove('active'); s.style.display = '';
+  });
   const el = document.getElementById('screen-' + name);
   if (el) { el.style.display = 'flex'; setTimeout(() => el.classList.add('active'), 10); }
 }
