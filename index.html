@@ -1607,6 +1607,9 @@ function aGo(id, el) {
   const m = aMeta[id] || ['Dashboard',''];
   document.getElementById('a-title').textContent = m[0];
   document.getElementById('a-sub').textContent = m[1];
+  if (id === 'users') loadRecentRegistrations();
+  if (id === 'overview') loadAdminData();
+  if (id === 'qna') loadAdminQnA();
 }
 
 function aSwitchDay(idx, el) {
@@ -2176,7 +2179,7 @@ async function loadActivityFeed() {
       supabaseClient.from('registrations').select('full_name,email,registered_at').order('registered_at', { ascending: false }).limit(5),
       supabaseClient.from('questions').select('body,author_name,created_at').order('created_at', { ascending: false }).limit(5),
       supabaseClient.from('notifications').select('title,sent_at').order('sent_at', { ascending: false }).limit(3),
-      supabaseClient.from('feedback').select('author_name,submitted_at').order('submitted_at', { ascending: false }).limit(3),
+      supabaseClient.from('feedback').select('*').order('submitted_at', { ascending: false }).limit(3),
     ]);
 
     const events = [];
