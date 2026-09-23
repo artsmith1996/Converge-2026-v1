@@ -864,8 +864,8 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
           </div>
         </div>
         <div class="kpi-grid">
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Registrations</div><div class="kpi-icon purple"><i class="ti ti-users"></i></div></div><div class="kpi-value" id="kpi-reg">187</div><div class="kpi-delta delta-up"><i class="ti ti-trending-up"></i> +23 this week</div></div>
-          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Confirmed</div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-value" id="kpi-conf">142</div><div class="kpi-delta delta-up"><i class="ti ti-trending-up"></i> 76% rate</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Registrations</div><div class="kpi-icon purple"><i class="ti ti-users"></i></div></div><div class="kpi-value" id="kpi-reg">0</div><div class="kpi-delta delta-up" id="kpi-reg-delta"><i class="ti ti-trending-up"></i> Loading…</div></div>
+          <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Confirmed</div><div class="kpi-icon green"><i class="ti ti-circle-check"></i></div></div><div class="kpi-value" id="kpi-conf">0</div><div class="kpi-delta delta-up" id="kpi-conf-delta"><i class="ti ti-trending-up"></i> Loading…</div></div>
           <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Sessions</div><div class="kpi-icon amber"><i class="ti ti-calendar"></i></div></div><div class="kpi-value">18</div><div class="kpi-delta delta-warn"><i class="ti ti-clock"></i> 4 speakers pending</div></div>
           <div class="kpi-card"><div class="kpi-top"><div class="kpi-label">Q&amp;A Pending</div><div class="kpi-icon coral"><i class="ti ti-message-dots"></i></div></div><div class="kpi-value">7</div><div class="kpi-delta delta-alert"><i class="ti ti-alert-circle"></i> Needs moderation</div></div>
         </div>
@@ -912,9 +912,9 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
       <!-- REGISTRATION -->
       <div id="a-panel-registration" class="a-panel">
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px">
-          <div class="card" style="padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--text)">187</div><div style="font-size:11px;color:var(--text3)">Total</div></div>
-          <div class="card" style="padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--success)">142</div><div style="font-size:11px;color:var(--text3)">Confirmed</div></div>
-          <div class="card" style="padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--warning)">45</div><div style="font-size:11px;color:var(--text3)">Pending</div></div>
+          <div class="card" style="padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--text)" id="reg-stat-total">0</div><div style="font-size:11px;color:var(--text3)">Total</div></div>
+          <div class="card" style="padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--success)" id="reg-stat-conf">0</div><div style="font-size:11px;color:var(--text3)">Confirmed</div></div>
+          <div class="card" style="padding:14px;text-align:center"><div style="font-size:24px;font-weight:800;color:var(--warning)" id="reg-stat-pend">0</div><div style="font-size:11px;color:var(--text3)">Pending</div></div>
         </div>
         <div class="toolbar">
           <div style="display:flex;gap:6px"><div class="chip active">All</div><div class="chip">Confirmed</div><div class="chip">Pending</div><div class="chip">VIP</div></div>
@@ -948,24 +948,24 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
       <div id="a-panel-agenda" class="a-panel">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
           <div class="day-tabs"><div class="day-tab active" onclick="aSwitchDay(0,this)">Day 1 · Nov 18</div><div class="day-tab" onclick="aSwitchDay(1,this)">Day 2 · Nov 19</div><div class="day-tab" onclick="aSwitchDay(2,this)">Day 3 · Nov 20</div></div>
-          <button class="btn btn-sm btn-primary" onclick="showToast('Session editor — available in live build')"><i class="ti ti-plus"></i> Add session</button>
+          <button class="btn btn-sm btn-primary" onclick="openAddSessionModal(this)"><i class="ti ti-plus"></i> Add session</button>
         </div>
         <div id="a-day0">
           <div class="session-card keynote"><div class="s-time"><strong>08:30 AM</strong><span>90 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Keynote</span></div><div class="s-title">Opening Keynote: The AI-Ready Enterprise</div><div class="s-meta"><span><i class="ti ti-user"></i> CEO, Accion Labs</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><span class="icon-btn" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff"><i class="ti ti-edit"></i></span></div>
           <div class="session-card"><div class="s-time"><strong>10:30 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">AI Delivery Lifecycle — AI in SDLC</div><div class="s-meta"><span><i class="ti ti-user"></i> Michael Kim</span><span><i class="ti ti-map-pin"></i> Room B-201</span><span class="s-badge">Track 1</span></div></div><span class="icon-btn"><i class="ti ti-edit"></i></span></div>
           <div class="session-card"><div class="s-time"><strong>11:45 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">Enterprise Knowledge Spine: AI Memory at Scale</div><div class="s-meta"><span><i class="ti ti-user"></i> Priya Anand</span><span><i class="ti ti-map-pin"></i> Room C-110</span><span class="s-badge">Track 2</span></div></div><span class="icon-btn"><i class="ti ti-edit"></i></span></div>
           <div class="session-card"><div class="s-time"><strong>01:30 PM</strong><span>45 min</span></div><div class="s-info"><div class="s-title">Data Foundation for AI Readiness</div><div class="s-meta"><span><i class="ti ti-user"></i> Nina Lawson</span><span><i class="ti ti-map-pin"></i> Room B-201</span><span class="s-badge">Track 3</span></div></div><span class="icon-btn"><i class="ti ti-edit"></i></span></div>
-          <button class="add-session-btn" onclick="showToast('Session editor — available in live build')"><i class="ti ti-plus"></i> Add session to Day 1</button>
+          <button class="add-session-btn" onclick="openAddSessionModal(this)"><i class="ti ti-plus"></i> Add session to Day 1</button>
         </div>
         <div id="a-day1" style="display:none">
           <div class="session-card keynote"><div class="s-time"><strong>09:00 AM</strong><span>75 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Keynote</span></div><div class="s-title">Next-Gen AI Platforms &amp; Agentic AI Ecosystems</div><div class="s-meta"><span><i class="ti ti-user"></i> Thomas Chen, Salesforce</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><span class="icon-btn" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff"><i class="ti ti-edit"></i></span></div>
           <div class="session-card"><div class="s-time"><strong>11:00 AM</strong><span>60 min</span></div><div class="s-info"><div class="s-title">Connected Enterprise &amp; Multi-agent Orchestration</div><div class="s-meta"><span><i class="ti ti-user"></i> Ravi Weston, IBM</span><span><i class="ti ti-map-pin"></i> Room A-105</span><span class="s-badge">Track 4</span></div></div><span class="icon-btn"><i class="ti ti-edit"></i></span></div>
-          <button class="add-session-btn" onclick="showToast('Session editor — available in live build')"><i class="ti ti-plus"></i> Add session to Day 2</button>
+          <button class="add-session-btn" onclick="openAddSessionModal(this)"><i class="ti ti-plus"></i> Add session to Day 2</button>
         </div>
         <div id="a-day2" style="display:none">
           <div class="session-card keynote"><div class="s-time"><strong>09:30 AM</strong><span>60 min</span></div><div class="s-info"><div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Closing Keynote</span></div><div class="s-title">AI Governance &amp; Security at Enterprise Scale</div><div class="s-meta"><span><i class="ti ti-user"></i> Nina Lawson, Deloitte</span><span><i class="ti ti-map-pin"></i> Main Stage</span></div></div><span class="icon-btn" style="border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff"><i class="ti ti-edit"></i></span></div>
           <div class="session-card"><div class="s-time"><strong>11:00 AM</strong><span>45 min</span></div><div class="s-info"><div class="s-title">Panel: The Future of AI-First Organizations</div><div class="s-meta"><span><i class="ti ti-users"></i> Multiple speakers</span><span><i class="ti ti-map-pin"></i> Main Stage</span><span class="s-badge">Panel</span></div></div><span class="icon-btn"><i class="ti ti-edit"></i></span></div>
-          <button class="add-session-btn" onclick="showToast('Session editor — available in live build')"><i class="ti ti-plus"></i> Add session to Day 3</button>
+          <button class="add-session-btn" onclick="openAddSessionModal(this)"><i class="ti ti-plus"></i> Add session to Day 3</button>
         </div>
       </div>
 
@@ -973,14 +973,38 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
       <div id="a-panel-qna" class="a-panel">
         <div class="qa-layout">
           <div>
-            <div class="toolbar"><div style="display:flex;gap:6px"><div class="chip active">All (7)</div><div class="chip">Unanswered</div><div class="chip">Pinned</div></div></div>
-            <div class="qa-card pinned"><div class="qa-q">How does Accion's approach to multi-agent orchestration differ from standard LLM chaining?</div><div class="qa-meta"><div class="avatar av-b" style="width:18px;height:18px;font-size:7px">MK</div><span>Michael Kim · Keynote · 9 min ago</span><span class="flag flag-pin" style="margin-left:auto"><i class="ti ti-pin"></i> Pinned</span></div><div class="qa-actions"><div class="votes-chip"><i class="ti ti-arrow-up"></i> 14</div><button class="btn btn-sm btn-primary" onclick="showToast('Marked for live answer')">Answer live</button><button class="btn btn-sm" onclick="showToast('Marked as answered')"><i class="ti ti-circle-check"></i></button><button class="btn btn-sm btn-danger" onclick="showToast('Removed')"><i class="ti ti-trash"></i></button></div></div>
-            <div class="qa-card answered"><div class="qa-q">Will session recordings be available after the event?</div><div class="qa-meta"><div class="avatar av-g" style="width:18px;height:18px;font-size:7px">PA</div><span>Priya Anand · General<span class="flag flag-ans" style="margin-left:8px"><i class="ti ti-circle-check"></i> Answered</span></span></div><div class="qa-actions"><div class="votes-chip"><i class="ti ti-arrow-up"></i> 8</div></div></div>
-            <div class="qa-card"><div class="qa-q">What data sovereignty considerations apply to agentic AI across EMEA jurisdictions?</div><div class="qa-meta"><div class="avatar av-n" style="width:18px;height:18px;font-size:7px">NL</div><span>Nina Lawson · AI Governance · 38 min ago</span></div><div class="qa-actions"><div class="votes-chip"><i class="ti ti-arrow-up"></i> 6</div><button class="btn btn-sm btn-primary" onclick="showToast('Ready for answer')">Answer live</button><button class="btn btn-sm" onclick="showToast('Pinned')"><i class="ti ti-pin"></i> Pin</button><button class="btn btn-sm btn-danger" onclick="showToast('Removed')"><i class="ti ti-trash"></i></button></div></div>
+            <div class="toolbar"><div style="display:flex;gap:6px">
+            <div class="chip active" onclick="filterQA('all',this)">All</div>
+            <div class="chip" onclick="filterQA('pending',this)">Unanswered</div>
+            <div class="chip" onclick="filterQA('pinned',this)">Pinned</div>
+            <div class="chip" onclick="filterQA('answered',this)">Answered</div>
+          </div>
+          <button class="btn btn-sm btn-primary" onclick="openModal('add-poll-modal')"><i class="ti ti-chart-bar"></i> New poll</button>
+        </div>
+        <div class="qa-layout">
+          <div>
+            <div id="admin-qna-list">
+              <div style="text-align:center;color:var(--text3);padding:40px 16px;font-size:13px">
+                <i class="ti ti-message-dots" style="font-size:32px;display:block;margin-bottom:8px"></i>
+                No questions yet. They will appear here when participants submit them.
+              </div>
+            </div>
           </div>
           <div>
-            <div class="qa-sidebar-box"><div class="section-hdr" style="font-size:12px">Q&amp;A overview</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><div style="text-align:center;background:var(--surface1);border-radius:7px;padding:9px"><div style="font-size:20px;font-weight:800">7</div><div style="font-size:10px;color:var(--text3)">Total</div></div><div style="text-align:center;background:var(--surface1);border-radius:7px;padding:9px"><div style="font-size:20px;font-weight:800;color:var(--cta)">5</div><div style="font-size:10px;color:var(--text3)">Unanswered</div></div></div></div>
-            <div class="qa-sidebar-box"><div class="section-hdr" style="font-size:12px">Active poll</div><div style="font-size:11px;color:var(--text3);margin-bottom:8px">142 responses</div><div class="poll-opt-bar"><div class="poll-opt-fill" style="width:42%"></div><div class="poll-opt-text">Data readiness<span class="poll-opt-pct">42%</span></div></div><div class="poll-opt-bar"><div class="poll-opt-fill" style="width:28%"></div><div class="poll-opt-text">Agentic AI<span class="poll-opt-pct">28%</span></div></div><div class="poll-opt-bar"><div class="poll-opt-fill" style="width:18%"></div><div class="poll-opt-text">Security<span class="poll-opt-pct">18%</span></div></div><div class="poll-opt-bar"><div class="poll-opt-fill" style="width:12%"></div><div class="poll-opt-text">Talent<span class="poll-opt-pct">12%</span></div></div><div style="display:flex;gap:6px;margin-top:8px"><button class="btn btn-sm" style="flex:1" onclick="showToast('Results shown')"><i class="ti ti-eye"></i> Show</button><button class="btn btn-sm btn-primary" onclick="showToast('New poll — live build')"><i class="ti ti-plus"></i> New</button></div></div>
+            <div class="qa-sidebar-box">
+              <div class="section-hdr" style="font-size:12px">Q&amp;A overview</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+                <div style="text-align:center;background:var(--surface1);border-radius:7px;padding:9px"><div style="font-size:20px;font-weight:800" id="qa-count-total">0</div><div style="font-size:10px;color:var(--text3)">Total</div></div>
+                <div style="text-align:center;background:var(--surface1);border-radius:7px;padding:9px"><div style="font-size:20px;font-weight:800;color:var(--cta)" id="qa-count-pending">0</div><div style="font-size:10px;color:var(--text3)">Unanswered</div></div>
+              </div>
+            </div>
+            <div class="qa-sidebar-box" id="active-poll-box">
+              <div class="section-hdr" style="font-size:12px">Active poll</div>
+              <div style="text-align:center;color:var(--text3);font-size:12px;padding:12px 0">
+                No active poll.<br>
+                <button class="btn btn-sm btn-primary" style="margin-top:8px" onclick="openModal('add-poll-modal')"><i class="ti ti-plus"></i> Create poll</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1020,14 +1044,13 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
               <div class="card-header"><div class="card-title">Overall rating</div><span style="font-size:11px;color:var(--text3)">98 responses</span></div>
               <div class="card-body">
                 <div style="display:flex;align-items:center;gap:18px;padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:14px">
-                  <div><div class="rating-num-big">4.6</div><div class="stars-row"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-half-filled"></i></div><div style="font-size:10px;color:var(--text3)">98 reviews</div></div>
+                  <div><div class="rating-num-big" id="fb-avg-rating">—</div><div class="stars-row"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-half-filled"></i></div><div style="font-size:10px;color:var(--text3)">98 reviews</div></div>
                   <div style="flex:1"><div class="rbar-row"><div class="rbar-label">5</div><div class="rbar-track"><div class="rbar-fill" style="width:68%"></div></div><div class="rbar-pct">68%</div></div><div class="rbar-row"><div class="rbar-label">4</div><div class="rbar-track"><div class="rbar-fill" style="width:22%"></div></div><div class="rbar-pct">22%</div></div><div class="rbar-row"><div class="rbar-label">3</div><div class="rbar-track"><div class="rbar-fill" style="width:7%"></div></div><div class="rbar-pct">7%</div></div></div>
                 </div>
-                <div style="display:flex;align-items:center;gap:12px"><div style="font-size:28px;font-weight:800;color:var(--success)">+72</div><div style="font-size:11px;color:var(--text3)">NPS · Promoters 78% · Passives 16% · Detractors 6%</div></div>
+                <div style="display:flex;align-items:center;gap:12px"><div style="font-size:28px;font-weight:800;color:var(--success)" id="fb-nps">—</div><div style="font-size:11px;color:var(--text3)" id="fb-nps-label">No NPS data yet</div></div>
               </div>
             </div>
-            <div class="fb-card"><div class="fb-top"><div><div class="fb-author">Sarah Reynolds · Google Cloud</div><div class="fb-sub">AI Delivery Lifecycle</div></div><div class="fb-stars-sm"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i></div></div><div class="fb-body">Practical frameworks, not theory. Would attend again.</div></div>
-            <div class="fb-card"><div class="fb-top"><div><div class="fb-author">Michael Kim · Microsoft</div><div class="fb-sub">Opening Keynote</div></div><div class="fb-stars-sm"><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star-filled"></i><i class="ti ti-star"></i></div></div><div class="fb-body">Content was world-class. Logistics could be tighter.</div></div>
+            <div style="text-align:center;color:var(--text3);padding:32px 16px;font-size:13px"><i class="ti ti-star" style="font-size:28px;display:block;margin-bottom:8px"></i>No feedback yet. It will appear here once participants rate sessions.</div>
           </div>
           <div style="display:flex;flex-direction:column;gap:12px">
             <div class="qa-sidebar-box"><div class="section-hdr" style="font-size:12px">By session</div>
@@ -1224,6 +1247,67 @@ input[type=color]{width:36px;height:36px;border:none;border-radius:6px;cursor:po
     <div style="display:flex;gap:8px">
       <button class="btn btn-danger" style="flex:1;justify-content:center" onclick="closeModal('edit-user-modal');showToast('User removed')"><i class="ti ti-trash"></i> Remove</button>
       <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="closeModal('edit-user-modal');showToast('User updated')"><i class="ti ti-check"></i> Save</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ADD SESSION MODAL -->
+<div class="modal-overlay" id="add-session-modal">
+  <div class="modal">
+    <div class="modal-title">Add session <div class="modal-close" onclick="closeModal('add-session-modal')"><i class="ti ti-x"></i></div></div>
+    <input type="hidden" id="session-day" value="1">
+    <label class="form-label">Session title</label>
+    <input type="text" class="form-input" id="sess-title" placeholder="e.g. AI Delivery Lifecycle">
+    <label class="form-label">Session type</label>
+    <select class="form-select" id="sess-type" style="margin-bottom:8px">
+      <option value="talk">Talk</option>
+      <option value="keynote">Keynote</option>
+      <option value="workshop">Workshop</option>
+      <option value="panel">Panel</option>
+    </select>
+    <label class="form-label">Track</label>
+    <input type="text" class="form-input" id="sess-track" placeholder="e.g. Track 1">
+    <label class="form-label">Speaker name</label>
+    <input type="text" class="form-input" id="sess-speaker" placeholder="Speaker full name">
+    <label class="form-label">Speaker organization</label>
+    <input type="text" class="form-input" id="sess-speaker-org" placeholder="Organization">
+    <label class="form-label">Room / Location</label>
+    <input type="text" class="form-input" id="sess-room" placeholder="e.g. Room B-201 or Main Stage">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div>
+        <label class="form-label">Start time</label>
+        <input type="time" class="form-input" id="sess-start-time" value="09:00">
+      </div>
+      <div>
+        <label class="form-label">Duration (minutes)</label>
+        <input type="number" class="form-input" id="sess-duration" value="60" min="15" max="480">
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn" style="flex:1;justify-content:center" onclick="closeModal('add-session-modal')">Cancel</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveSession()"><i class="ti ti-check"></i> Save session</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD POLL MODAL -->
+<div class="modal-overlay" id="add-poll-modal">
+  <div class="modal">
+    <div class="modal-title">Create poll <div class="modal-close" onclick="closeModal('add-poll-modal')"><i class="ti ti-x"></i></div></div>
+    <label class="form-label">Poll question</label>
+    <input type="text" class="form-input" id="poll-question" placeholder="e.g. Which topic was most valuable?">
+    <label class="form-label">Option 1</label>
+    <input type="text" class="form-input" id="poll-opt1" placeholder="Option A">
+    <label class="form-label">Option 2</label>
+    <input type="text" class="form-input" id="poll-opt2" placeholder="Option B">
+    <label class="form-label">Option 3</label>
+    <input type="text" class="form-input" id="poll-opt3" placeholder="Option C (optional)">
+    <label class="form-label">Option 4</label>
+    <input type="text" class="form-input" id="poll-opt4" placeholder="Option D (optional)">
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn" style="flex:1;justify-content:center" onclick="closeModal('add-poll-modal')">Cancel</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="createPoll()"><i class="ti ti-chart-bar"></i> Launch poll</button>
     </div>
   </div>
 </div>
@@ -2008,6 +2092,720 @@ function installPWA() {
 function dismissBanner() {
   document.getElementById('install-banner').classList.remove('show');
 }
+
+
+
+/* ══════════════════════════════
+   LOAD ADMIN DATA — REAL SUPABASE
+══════════════════════════════ */
+async function loadAdminData() {
+  tick();
+  if (demoMode || !supabaseClient) return;
+  try {
+    // KPI — registrations
+    const { count: total } = await supabaseClient
+      .from('registrations').select('*', { count: 'exact', head: true });
+    const { count: confirmed } = await supabaseClient
+      .from('registrations').select('*', { count: 'exact', head: true })
+      .eq('status', 'confirmed');
+    const pending = (total || 0) - (confirmed || 0);
+
+    ['kpi-reg','reg-stat-total'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = total || 0;
+    });
+    ['kpi-conf','reg-stat-conf'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = confirmed || 0;
+    });
+    const pendEl = document.getElementById('reg-stat-pend');
+    if (pendEl) pendEl.textContent = pending;
+
+    const deltaReg = document.getElementById('kpi-reg-delta');
+    if (deltaReg) deltaReg.innerHTML = '<i class="ti ti-users"></i> ' + (total || 0) + ' total';
+    const deltaConf = document.getElementById('kpi-conf-delta');
+    if (deltaConf) deltaConf.innerHTML = '<i class="ti ti-trending-up"></i> ' + (total ? Math.round((confirmed/total)*100) : 0) + '% confirm rate';
+
+    // Recent registrations
+    await loadRecentRegistrations();
+
+    // Load sessions into agenda
+    await loadSessions();
+
+    // Load Q&A
+    await loadAdminQnA();
+
+    // Load feedback stats
+    await loadFeedbackStats();
+
+  } catch(e) { console.error('loadAdminData error:', e); }
+}
+
+async function loadRecentRegistrations() {
+  if (demoMode || !supabaseClient) return;
+  try {
+    const { data } = await supabaseClient
+      .from('registrations')
+      .select('*')
+      .order('registered_at', { ascending: false })
+      .limit(5);
+
+    const tbody = document.querySelector('.data-table tbody');
+    if (!tbody || !data) return;
+
+    if (data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:var(--text3);padding:18px;font-size:12px">No recent registrations</td></tr>';
+      return;
+    }
+
+    const colors = ['av-p','av-b','av-g','av-a','av-n','av-m'];
+    tbody.innerHTML = data.map((r, i) => {
+      const name = r.full_name || r.email?.split('@')[0] || 'Unknown';
+      const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+      const color = colors[i % colors.length];
+      const badgeMap = { confirmed:'badge-conf', pending:'badge-pend', waitlisted:'badge-wait', vip:'badge-vip', admin:'badge-admin' };
+      const badge = badgeMap[r.status] || 'badge-pend';
+      return `<tr>
+        <td><div class="att-cell"><div class="avatar ${color}">${initials}</div>
+          <div><div class="att-name">${name}</div><div class="att-org">${r.organization||r.email||''}</div></div></div></td>
+        <td style="color:var(--text3)">${r.role_title||'—'}</td>
+        <td><span class="badge ${badge}">${r.status||'pending'}</span></td>
+      </tr>`;
+    }).join('');
+
+    // Also populate reg-table-body
+    const regTbody = document.getElementById('reg-table-body');
+    if (regTbody) {
+      regTbody.innerHTML = data.map((r, i) => {
+        const name = r.full_name || r.email?.split('@')[0] || 'Unknown';
+        const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+        const color = colors[i % colors.length];
+        const badgeMap = { confirmed:'badge-conf', pending:'badge-pend', waitlisted:'badge-wait', vip:'badge-vip', admin:'badge-admin' };
+        const badge = badgeMap[r.status] || 'badge-pend';
+        return `<tr>
+          <td><div class="att-cell"><div class="avatar ${color}">${initials}</div>
+            <div><div class="att-name">${name}</div><div class="att-org">${r.email||''}</div></div></div></td>
+          <td>${r.organization||'—'}</td>
+          <td style="color:var(--text3)">${r.region||'—'}</td>
+          <td><span class="badge ${badge}">${r.status||'pending'}</span></td>
+          <td>
+            <span class="icon-btn"><i class="ti ti-eye"></i></span>
+            <span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span>
+            <span class="icon-btn" onclick="showToast('Invite resent')"><i class="ti ti-mail"></i></span>
+            <span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    // Populate user-table-body
+    const userTbody = document.getElementById('user-table-body');
+    if (userTbody && data.length > 0) {
+      userTbody.innerHTML = data.map((r, i) => {
+        const name = r.full_name || r.email?.split('@')[0] || 'Unknown';
+        const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+        const color = colors[i % colors.length];
+        return `<tr>
+          <td><div class="att-cell"><div class="avatar ${color}">${initials}</div>
+            <div><div class="att-name">${name}</div><div class="att-org">${r.organization||''}</div></div></div></td>
+          <td style="color:var(--text3);font-size:11px">${r.email||''}</td>
+          <td>${r.organization||'—'}</td>
+          <td><select class="role-select" data-email="${r.email}" onchange="changeRole(this)">
+            <option value="participant" ${r.status!=='admin'?'selected':''}>participant</option>
+            <option value="admin" ${r.status==='admin'?'selected':''}>admin</option>
+            <option value="vip" ${r.status==='vip'?'selected':''}>vip</option>
+          </select></td>
+          <td><span class="badge ${r.status==='admin'?'badge-admin':r.status==='vip'?'badge-vip':'badge-conf'}">${r.status==='admin'?'Admin':r.status==='vip'?'VIP':'Participant'}</span></td>
+          <td>
+            <span class="icon-btn" onclick="openModal('edit-user-modal')"><i class="ti ti-edit"></i></span>
+            <span class="icon-btn danger" onclick="confirmRemove(this)"><i class="ti ti-trash"></i></span>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+  } catch(e) { console.error('loadRecentRegistrations:', e); }
+}
+
+/* ══════════════════════════════
+   SESSIONS — LOAD & SAVE
+══════════════════════════════ */
+let allSessions = [];
+let currentEditingSessionId = null;
+
+async function loadSessions() {
+  if (demoMode || !supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient
+      .from('sessions')
+      .select('*')
+      .order('start_time');
+    if (error) throw error;
+    allSessions = data || [];
+    renderAdminSessions();
+    renderParticipantSessions();
+  } catch(e) { console.error('loadSessions:', e); }
+}
+
+function renderAdminSessions() {
+  [1, 2, 3].forEach(day => {
+    const container = document.getElementById('a-day' + (day-1));
+    if (!container) return;
+    const daySessions = allSessions.filter(s => s.day_number === day);
+    if (daySessions.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center;color:var(--text3);padding:32px;font-size:13px">
+          <i class="ti ti-calendar" style="font-size:28px;display:block;margin-bottom:8px"></i>
+          No sessions for Day ${day} yet.
+        </div>
+        <button class="add-session-btn" onclick="openAddSessionModal(${day})">
+          <i class="ti ti-plus"></i> Add session to Day ${day}
+        </button>`;
+      return;
+    }
+    container.innerHTML = daySessions.map(s => {
+      const isKeynote = s.session_type === 'keynote';
+      const timeStr = s.start_time ? s.start_time.slice(0,5) : '';
+      return `
+        <div class="session-card ${isKeynote ? 'keynote' : ''}" data-session-id="${s.id}">
+          <div class="s-time"><strong>${timeStr}</strong><span>${s.duration_min||60} min</span></div>
+          <div class="s-info">
+            ${isKeynote ? '<div style="margin-bottom:5px"><span style="background:rgba(255,255,255,0.15);color:#fff;border-radius:4px;padding:1px 8px;font-size:10px;font-weight:600">Keynote</span></div>' : ''}
+            <div class="s-title">${s.title}</div>
+            <div class="s-meta">
+              ${s.speaker_name ? '<span><i class="ti ti-user"></i> ' + s.speaker_name + (s.speaker_org ? ', ' + s.speaker_org : '') + '</span>' : ''}
+              ${s.room ? '<span><i class="ti ti-map-pin"></i> ' + s.room + '</span>' : ''}
+              ${s.track ? '<span class="s-badge">' + s.track + '</span>' : ''}
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <span class="icon-btn ${isKeynote ? "style='border-color:rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);color:#fff'" : ''}" onclick="openEditSessionModal('${s.id}')"><i class="ti ti-edit"></i></span>
+            <span class="icon-btn danger" onclick="deleteSession('${s.id}',this)"><i class="ti ti-trash"></i></span>
+          </div>
+        </div>`;
+    }).join('') + `
+      <button class="add-session-btn" onclick="openAddSessionModal(${day})">
+        <i class="ti ti-plus"></i> Add session to Day ${day}
+      </button>`;
+  });
+}
+
+function renderParticipantSessions() {
+  [1, 2, 3].forEach(day => {
+    const container = document.getElementById('p-day' + (day-1));
+    if (!container) return;
+    const daySessions = allSessions.filter(s => s.day_number === day);
+    if (daySessions.length === 0) {
+      container.innerHTML = '<div style="text-align:center;color:var(--text3);padding:24px;font-size:13px">No sessions scheduled for this day yet.</div>';
+      return;
+    }
+    container.innerHTML = daySessions.map(s => {
+      const timeStr = s.start_time ? s.start_time.slice(0,5) : '';
+      const type = s.session_type || s.track || 'Session';
+      return `
+        <div class="p-session-card">
+          <div class="p-sess-time"><strong>${timeStr}</strong>${s.duration_min ? s.duration_min+'m' : ''}</div>
+          <div>
+            <div class="p-sess-title">${s.title}</div>
+            <div class="p-sess-meta">${s.speaker_name ? s.speaker_name + ' · ' : ''}${s.room||''}</div>
+            <span class="p-sess-tag">${type}</span>
+          </div>
+        </div>`;
+    }).join('');
+  });
+  // Also update home screen sessions
+  const homeSessions = allSessions.filter(s => s.day_number === 1).slice(0,3);
+  const homeContainer = document.getElementById('p-home-sessions');
+  if (homeContainer && homeSessions.length > 0) {
+    homeContainer.innerHTML = homeSessions.map(s => {
+      const timeStr = s.start_time ? s.start_time.slice(0,5) : '';
+      return `
+        <div class="p-session-card" onclick="pGo('agenda')">
+          <div class="p-sess-time"><strong>${timeStr}</strong></div>
+          <div>
+            <div class="p-sess-title">${s.title}</div>
+            <div class="p-sess-meta">${s.room||''}</div>
+            <span class="p-sess-tag">${s.track||s.session_type||''}</span>
+          </div>
+        </div>`;
+    }).join('');
+  }
+}
+
+function openAddSessionModal(day) {
+  currentEditingSessionId = null;
+  document.getElementById('session-day').value = day || 1;
+  document.getElementById('sess-title').value = '';
+  document.getElementById('sess-type').value = 'talk';
+  document.getElementById('sess-track').value = '';
+  document.getElementById('sess-speaker').value = '';
+  document.getElementById('sess-speaker-org').value = '';
+  document.getElementById('sess-room').value = '';
+  document.getElementById('sess-start-time').value = '09:00';
+  document.getElementById('sess-duration').value = '60';
+  document.querySelector('#add-session-modal .modal-title').childNodes[0].textContent = 'Add session ';
+  openModal('add-session-modal');
+}
+
+function openEditSessionModal(sessionId) {
+  const session = allSessions.find(s => s.id === sessionId);
+  if (!session) { showToast('Session not found'); return; }
+  currentEditingSessionId = sessionId;
+  document.getElementById('session-day').value = session.day_number || 1;
+  document.getElementById('sess-title').value = session.title || '';
+  document.getElementById('sess-type').value = session.session_type || 'talk';
+  document.getElementById('sess-track').value = session.track || '';
+  document.getElementById('sess-speaker').value = session.speaker_name || '';
+  document.getElementById('sess-speaker-org').value = session.speaker_org || '';
+  document.getElementById('sess-room').value = session.room || '';
+  document.getElementById('sess-start-time').value = session.start_time ? session.start_time.slice(0,5) : '09:00';
+  document.getElementById('sess-duration').value = session.duration_min || 60;
+  document.querySelector('#add-session-modal .modal-title').childNodes[0].textContent = 'Edit session ';
+  openModal('add-session-modal');
+}
+
+async function saveSession() {
+  const title = document.getElementById('sess-title').value.trim();
+  if (!title) { showToast('Session title is required'); return; }
+
+  const sessionData = {
+    day_number:   parseInt(document.getElementById('session-day').value),
+    title,
+    session_type: document.getElementById('sess-type').value,
+    track:        document.getElementById('sess-track').value.trim(),
+    speaker_name: document.getElementById('sess-speaker').value.trim(),
+    speaker_org:  document.getElementById('sess-speaker-org').value.trim(),
+    room:         document.getElementById('sess-room').value.trim(),
+    start_time:   document.getElementById('sess-start-time').value,
+    duration_min: parseInt(document.getElementById('sess-duration').value) || 60,
+    is_published: true
+  };
+
+  const btn = document.querySelector('#add-session-modal .btn-primary');
+  btn.innerHTML = '<span class="loading-spinner"></span> Saving…';
+  btn.disabled = true;
+
+  try {
+    if (!demoMode && supabaseClient) {
+      // Get event_id
+      const { data: events } = await supabaseClient.from('events').select('id').limit(1);
+      if (events && events[0]) sessionData.event_id = events[0].id;
+
+      if (currentEditingSessionId) {
+        const { error } = await supabaseClient.from('sessions').update(sessionData).eq('id', currentEditingSessionId);
+        if (error) throw error;
+        // Update local
+        const idx = allSessions.findIndex(s => s.id === currentEditingSessionId);
+        if (idx > -1) allSessions[idx] = { ...allSessions[idx], ...sessionData };
+        showToast('✓ Session updated');
+      } else {
+        const { data, error } = await supabaseClient.from('sessions').insert([sessionData]).select();
+        if (error) throw error;
+        if (data && data[0]) allSessions.push(data[0]);
+        showToast('✓ Session added');
+      }
+    } else {
+      // Demo mode — add locally
+      const mockSession = { id: 'demo-' + Date.now(), ...sessionData };
+      if (currentEditingSessionId) {
+        const idx = allSessions.findIndex(s => s.id === currentEditingSessionId);
+        if (idx > -1) allSessions[idx] = { ...allSessions[idx], ...sessionData };
+        showToast('✓ Session updated (demo)');
+      } else {
+        allSessions.push(mockSession);
+        showToast('✓ Session added (demo)');
+      }
+    }
+
+    renderAdminSessions();
+    renderParticipantSessions();
+    closeModal('add-session-modal');
+
+  } catch(err) {
+    showToast('Error: ' + (err.message || 'Could not save session'));
+  } finally {
+    btn.innerHTML = '<i class="ti ti-check"></i> Save session';
+    btn.disabled = false;
+  }
+}
+
+async function deleteSession(sessionId, btn) {
+  if (!confirm('Delete this session?')) return;
+  try {
+    if (!demoMode && supabaseClient) {
+      const { error } = await supabaseClient.from('sessions').delete().eq('id', sessionId);
+      if (error) throw error;
+    }
+    allSessions = allSessions.filter(s => s.id !== sessionId);
+    renderAdminSessions();
+    renderParticipantSessions();
+    showToast('Session deleted');
+  } catch(e) {
+    showToast('Error deleting session');
+  }
+}
+
+/* ══════════════════════════════
+   Q&A — LIVE FROM SUPABASE
+══════════════════════════════ */
+let allQuestions = [];
+
+async function loadAdminQnA() {
+  if (demoMode || !supabaseClient) return;
+  try {
+    const { data, error } = await supabaseClient
+      .from('questions')
+      .select('*')
+      .order('vote_count', { ascending: false });
+    if (error) throw error;
+    allQuestions = data || [];
+    renderAdminQnA(allQuestions);
+
+    // Update counts
+    const total = allQuestions.length;
+    const pending = allQuestions.filter(q => q.status === 'pending').length;
+    const totalEl = document.getElementById('qa-count-total');
+    const pendEl = document.getElementById('qa-count-pending');
+    if (totalEl) totalEl.textContent = total;
+    if (pendEl) pendEl.textContent = pending;
+
+    // Real-time subscription
+    supabaseClient
+      .channel('questions-channel')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'questions' }, payload => {
+        loadAdminQnA();
+        // Also update participant view
+        loadParticipantQnA();
+      })
+      .subscribe();
+
+  } catch(e) { console.error('loadAdminQnA:', e); }
+}
+
+function renderAdminQnA(questions) {
+  const container = document.getElementById('admin-qna-list');
+  if (!container) return;
+  if (questions.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text3);padding:40px 16px;font-size:13px"><i class="ti ti-message-dots" style="font-size:32px;display:block;margin-bottom:8px"></i>No questions yet.</div>';
+    return;
+  }
+  const colors = ['av-p','av-b','av-g','av-a','av-n','av-m'];
+  container.innerHTML = questions.map((q, i) => {
+    const flagClass = q.status === 'pinned' ? 'pinned' : q.status === 'answered' ? 'answered' : '';
+    const initials = (q.author_name||'?').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+    const color = colors[i % colors.length];
+    return `
+      <div class="qa-card ${flagClass}" id="qcard-${q.id}">
+        <div class="qa-q">${q.body}</div>
+        <div class="qa-meta">
+          <div class="avatar ${color}" style="width:18px;height:18px;font-size:7px">${initials}</div>
+          <span>${q.author_name||'Anonymous'}</span>
+          ${q.status==='pinned' ? '<span class="flag flag-pin" style="margin-left:auto"><i class="ti ti-pin"></i> Pinned</span>' : ''}
+          ${q.status==='answered' ? '<span class="flag flag-ans" style="margin-left:auto"><i class="ti ti-circle-check"></i> Answered</span>' : ''}
+        </div>
+        <div class="qa-actions">
+          <div class="votes-chip"><i class="ti ti-arrow-up"></i> ${q.vote_count||0}</div>
+          ${q.status !== 'answered' ? `<button class="btn btn-sm btn-primary" onclick="moderateQuestion('${q.id}','answered')"><i class="ti ti-circle-check"></i> Mark answered</button>` : ''}
+          ${q.status !== 'pinned' ? `<button class="btn btn-sm" onclick="moderateQuestion('${q.id}','pinned')"><i class="ti ti-pin"></i> Pin</button>` : ''}
+          <button class="btn btn-sm btn-danger" onclick="moderateQuestion('${q.id}','rejected')"><i class="ti ti-trash"></i></button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+async function moderateQuestion(questionId, newStatus) {
+  try {
+    if (!demoMode && supabaseClient) {
+      const { error } = await supabaseClient.from('questions').update({ status: newStatus }).eq('id', questionId);
+      if (error) throw error;
+    }
+    const q = allQuestions.find(q => q.id === questionId);
+    if (q) q.status = newStatus;
+    if (newStatus === 'rejected') {
+      allQuestions = allQuestions.filter(q => q.id !== questionId);
+    }
+    renderAdminQnA(allQuestions);
+    const labels = { answered:'Marked as answered', pinned:'Question pinned', rejected:'Question removed' };
+    showToast('✓ ' + (labels[newStatus] || 'Updated'));
+    // Refresh participant view
+    await loadParticipantQnA();
+  } catch(e) { showToast('Error: ' + e.message); }
+}
+
+function filterQA(status, el) {
+  document.querySelectorAll('#a-panel-qna .chip').forEach(c => c.classList.remove('active'));
+  if (el) el.classList.add('active');
+  if (status === 'all') { renderAdminQnA(allQuestions); return; }
+  renderAdminQnA(allQuestions.filter(q => q.status === status));
+}
+
+async function loadParticipantQnA() {
+  if (demoMode || !supabaseClient) return;
+  try {
+    const { data } = await supabaseClient.from('questions')
+      .select('*').neq('status','rejected').order('vote_count', { ascending: false });
+    if (!data) return;
+    const container = document.getElementById('qna-list');
+    if (!container) return;
+    if (data.length === 0) {
+      container.innerHTML = '<div style="text-align:center;color:var(--text3);padding:24px;font-size:13px">No questions yet. Be the first to ask!</div>';
+      return;
+    }
+    const colors = ['av-p','av-b','av-g','av-a','av-n','av-m'];
+    container.innerHTML = data.map((q, i) => {
+      const isPinned = q.status === 'pinned';
+      const initials = (q.author_name||'?').split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+      return `
+        <div class="p-question-card ${isPinned ? 'pinned' : ''}">
+          <div class="pq-body">${q.body}</div>
+          <div class="pq-meta">
+            <span class="pq-author">${q.author_name||'Anonymous'}</span>
+            <div class="pq-vote" id="pv-${q.id}" onclick="toggleVoteDB('${q.id}','pv-${q.id}','pvc-${q.id}')">
+              <i class="ti ti-arrow-up"></i><span id="pvc-${q.id}">${q.vote_count||0}</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {}
+}
+
+/* ══════════════════════════════
+   POLLS — CREATE & DISPLAY
+══════════════════════════════ */
+async function createPoll() {
+  const question = document.getElementById('poll-question').value.trim();
+  const opts = [
+    document.getElementById('poll-opt1').value.trim(),
+    document.getElementById('poll-opt2').value.trim(),
+    document.getElementById('poll-opt3').value.trim(),
+    document.getElementById('poll-opt4').value.trim(),
+  ].filter(Boolean);
+
+  if (!question) { showToast('Poll question is required'); return; }
+  if (opts.length < 2) { showToast('At least 2 options are required'); return; }
+
+  const btn = document.querySelector('#add-poll-modal .btn-primary');
+  btn.innerHTML = '<span class="loading-spinner"></span> Creating…';
+  btn.disabled = true;
+
+  try {
+    let pollId = 'demo-poll-' + Date.now();
+    if (!demoMode && supabaseClient) {
+      const { data: events } = await supabaseClient.from('events').select('id').limit(1);
+      const { data: poll, error } = await supabaseClient.from('polls')
+        .insert([{ question, is_active: true }]).select();
+      if (error) throw error;
+      pollId = poll[0].id;
+      // Insert options
+      await supabaseClient.from('poll_options').insert(
+        opts.map((text, i) => ({ poll_id: pollId, option_text: text, vote_count: 0, sort_order: i }))
+      );
+    }
+
+    // Display in admin sidebar
+    const pollBox = document.getElementById('active-poll-box');
+    if (pollBox) {
+      pollBox.innerHTML = `
+        <div class="section-hdr" style="font-size:12px">Active poll</div>
+        <div style="font-size:12px;font-weight:500;color:var(--text);margin-bottom:8px">${question}</div>
+        ${opts.map(o => `<div class="poll-opt-bar"><div class="poll-opt-fill" style="width:0%"></div><div class="poll-opt-text">${o}<span class="poll-opt-pct">0%</span></div></div>`).join('')}
+        <div style="display:flex;gap:6px;margin-top:8px">
+          <button class="btn btn-sm btn-danger" style="flex:1" onclick="closePoll('${pollId}')"><i class="ti ti-x"></i> Close poll</button>
+        </div>`;
+    }
+
+    // Display in participant polls view
+    displayPollForParticipant(pollId, question, opts);
+
+    closeModal('add-poll-modal');
+    ['poll-question','poll-opt1','poll-opt2','poll-opt3','poll-opt4'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.value = '';
+    });
+    showToast('✓ Poll launched to all participants');
+
+  } catch(e) {
+    showToast('Error creating poll: ' + e.message);
+  } finally {
+    btn.innerHTML = '<i class="ti ti-chart-bar"></i> Launch poll';
+    btn.disabled = false;
+  }
+}
+
+function displayPollForParticipant(pollId, question, options) {
+  const container = document.getElementById('p-panel-polls');
+  if (!container) return;
+  const pollsContent = container.querySelector('div[style*="padding"]') || container;
+  const existingPoll = document.getElementById('live-poll-' + pollId);
+  if (existingPoll) return;
+
+  const pollDiv = document.createElement('div');
+  pollDiv.className = 'poll-card';
+  pollDiv.id = 'live-poll-' + pollId;
+  pollDiv.innerHTML = `
+    <div class="poll-q">${question}</div>
+    <div id="poll-vote-view-${pollId}">
+      ${options.map((o, i) => `<button class="poll-option-btn" onclick="votePollLive('${pollId}',${i},'${o}')">${o}</button>`).join('')}
+    </div>
+    <div id="poll-result-view-${pollId}" style="display:none">
+      ${options.map(o => `
+        <div class="poll-result-row">
+          <div class="poll-result-label"><span>${o}</span><span class="poll-result-pct" id="pct-${pollId}-${o.replace(/\s/g,'_')}">0%</span></div>
+          <div class="poll-bar-wrap"><div class="poll-bar-fill" id="bar-${pollId}-${o.replace(/\s/g,'_')}" style="width:0%"></div></div>
+        </div>`).join('')}
+      <div style="font-size:11px;color:var(--text3);margin-top:8px;text-align:center" id="poll-resp-count-${pollId}">0 responses</div>
+    </div>`;
+
+  const firstChild = container.querySelector('div[style*="padding"]');
+  if (firstChild) {
+    firstChild.insertBefore(pollDiv, firstChild.firstChild);
+  }
+}
+
+async function votePollLive(pollId, optionIndex, optionText) {
+  try {
+    if (!demoMode && supabaseClient) {
+      const { data: opts } = await supabaseClient.from('poll_options')
+        .select('*').eq('poll_id', pollId).order('sort_order');
+      if (opts && opts[optionIndex]) {
+        await supabaseClient.from('poll_options')
+          .update({ vote_count: (opts[optionIndex].vote_count || 0) + 1 })
+          .eq('id', opts[optionIndex].id);
+        // Show results
+        const totalVotes = opts.reduce((sum, o) => sum + (o.vote_count || 0), 0) + 1;
+        opts.forEach((o, i) => {
+          const votes = (o.vote_count || 0) + (i === optionIndex ? 1 : 0);
+          const pct = Math.round((votes / totalVotes) * 100);
+          const key = o.option_text.replace(/\s/g,'_');
+          const pctEl = document.getElementById('pct-' + pollId + '-' + key);
+          const barEl = document.getElementById('bar-' + pollId + '-' + key);
+          if (pctEl) pctEl.textContent = pct + '%';
+          if (barEl) barEl.style.width = pct + '%';
+        });
+        const countEl = document.getElementById('poll-resp-count-' + pollId);
+        if (countEl) countEl.textContent = totalVotes + ' responses';
+      }
+    }
+    document.getElementById('poll-vote-view-' + pollId).style.display = 'none';
+    document.getElementById('poll-result-view-' + pollId).style.display = 'block';
+    showToast('✓ Vote recorded!');
+  } catch(e) {
+    showToast('Error recording vote');
+  }
+}
+
+async function closePoll(pollId) {
+  if (!demoMode && supabaseClient) {
+    await supabaseClient.from('polls').update({ is_active: false }).eq('id', pollId);
+  }
+  const pollBox = document.getElementById('active-poll-box');
+  if (pollBox) {
+    pollBox.innerHTML = `
+      <div class="section-hdr" style="font-size:12px">Active poll</div>
+      <div style="text-align:center;color:var(--text3);font-size:12px;padding:12px 0">
+        No active poll.<br>
+        <button class="btn btn-sm btn-primary" style="margin-top:8px" onclick="openModal('add-poll-modal')"><i class="ti ti-plus"></i> Create poll</button>
+      </div>`;
+  }
+  showToast('Poll closed');
+}
+
+/* ══════════════════════════════
+   FEEDBACK STATS
+══════════════════════════════ */
+async function loadFeedbackStats() {
+  if (demoMode || !supabaseClient) return;
+  try {
+    const { data } = await supabaseClient.from('feedback').select('rating, nps_score, comment, author_name');
+    if (!data || data.length === 0) return;
+
+    const ratings = data.filter(f => f.rating);
+    if (ratings.length > 0) {
+      const avg = ratings.reduce((s, f) => s + f.rating, 0) / ratings.length;
+      const avgEl = document.getElementById('fb-avg-rating');
+      if (avgEl) avgEl.textContent = avg.toFixed(1);
+    }
+
+    const npsData = data.filter(f => f.nps_score !== null);
+    if (npsData.length > 0) {
+      const promoters = npsData.filter(f => f.nps_score >= 9).length;
+      const detractors = npsData.filter(f => f.nps_score <= 6).length;
+      const nps = Math.round(((promoters - detractors) / npsData.length) * 100);
+      const npsEl = document.getElementById('fb-nps');
+      const npsLabel = document.getElementById('fb-nps-label');
+      if (npsEl) npsEl.textContent = (nps >= 0 ? '+' : '') + nps;
+      if (npsLabel) npsLabel.textContent = 'Promoters ' + Math.round((promoters/npsData.length)*100) + '% · Detractors ' + Math.round((detractors/npsData.length)*100) + '%';
+    }
+  } catch(e) {}
+}
+
+/* ══════════════════════════════
+   PARTICIPANT DATA LOAD
+══════════════════════════════ */
+async function loadParticipantData() {
+  tick();
+  if (!currentUser) return;
+  const name = currentUser.user_metadata?.full_name ||
+               currentUser.email?.split('@')[0] || 'there';
+  const initials = name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('p-greeting').textContent = 'Hey, ' + name.split(' ')[0] + ' 👋';
+  document.getElementById('p-avatar').textContent = initials;
+  document.getElementById('prof-avatar-lg').textContent = initials;
+  document.getElementById('prof-name').textContent = name;
+  document.getElementById('pf-name').value = name;
+  if (currentUser.email) {
+    document.getElementById('prof-org').textContent = currentUser.email;
+    document.getElementById('pf-name').value = name;
+  }
+
+  if (!demoMode && supabaseClient) {
+    // Load real sessions for participant
+    await loadSessions();
+    // Load real Q&A
+    await loadParticipantQnA();
+    // Subscribe to real-time notifications
+    supabaseClient
+      .channel('notif-channel')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications' }, payload => {
+        addParticipantNotification(payload.new);
+      })
+      .subscribe();
+    // Load any existing notifications
+    const { data: notifs } = await supabaseClient.from('notifications')
+      .select('*').order('sent_at', { ascending: false }).limit(10);
+    if (notifs && notifs.length > 0) {
+      const notifList = document.getElementById('notif-list');
+      if (notifList) {
+        notifList.innerHTML = notifs.map(n => `
+          <div class="notif-item">
+            <div style="width:8px;flex-shrink:0"></div>
+            <div>
+              <div class="notif-body"><strong>${n.title}</strong>${n.body ? ' — ' + n.body : ''}</div>
+              <div class="notif-time">${new Date(n.sent_at).toLocaleString()}</div>
+            </div>
+          </div>`).join('');
+      }
+    }
+  }
+
+  setTimeout(() => {
+    if (deferredPrompt) document.getElementById('install-banner').classList.add('show');
+  }, 4000);
+}
+
+function addParticipantNotification(notif) {
+  const list = document.getElementById('notif-list');
+  if (!list) return;
+  const emptyMsg = list.querySelector('[style*="text-align:center"]');
+  if (emptyMsg) emptyMsg.remove();
+  const item = document.createElement('div');
+  item.className = 'notif-item unread';
+  item.innerHTML = `<div class="notif-dot"></div><div><div class="notif-body"><strong>${notif.title}</strong>${notif.body ? ' — ' + notif.body : ''}</div><div class="notif-time">Just now</div></div>`;
+  list.prepend(item);
+  document.getElementById('p-notif-badge').style.display = 'block';
+}
+
+// Fix typo in renderParticipantSessions
+const _origRender = renderParticipantSessions;
 
 /* filter chips */
 document.querySelectorAll('.filter-bar .chip, .toolbar .chip').forEach(c => {
