@@ -1396,15 +1396,16 @@ async function addUser() {
         // 3. If they already exist in auth.users, upsert their profile role
         //    The trigger on auth.users → profiles handles new users automatically.
         //    For existing users we patch their profile directly.
-        const { data: existing } = await supabaseClient
-          .from('profiles').select('id').eq('email', email).maybeSingle()
-          .catch(() => ({ data: null }));
-        if (existing?.id) {
-          await supabaseClient.from('profiles').update({
-            full_name: name, organization: org,
-            role_title: roleTitle, attendee_type: appRole, region
-          }).eq('id', existing.id);
-        }
+        try {
+          const { data: existing } = await supabaseClient
+            .from('profiles').select('id').eq('email', email).maybeSingle();
+          if (existing?.id) {
+            await supabaseClient.from('profiles').update({
+              full_name: name, organization: org,
+              role_title: roleTitle, attendee_type: appRole, region
+            }).eq('id', existing.id);
+          }
+        } catch(profileErr) { /* profile update optional */ }
       }
       // If otpErr, we still saved the registration row — user can be added to auth manually.
     }
